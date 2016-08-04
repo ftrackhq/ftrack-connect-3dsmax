@@ -7,8 +7,15 @@
 Release Notes
 *************
 
+.. release:: 0.2.7
+    :date: 2016-08-04
+
+    .. change:: fixed
+
+        Clean up and moved to ftrack repository.
+
 .. release:: 0.2.6
-    :date: 2016-19-15
+    :date: 2016-07-19
 
     .. change:: fixed
 
