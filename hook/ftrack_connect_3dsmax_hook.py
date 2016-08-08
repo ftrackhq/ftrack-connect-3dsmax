@@ -10,11 +10,13 @@ import re
 import ftrack
 import ftrack_connect.application
 
-maxStartupDir = os.path.abspath(os.path.join(
-    os.path.dirname(__file__), '..', 'resource', 'scripts', 'startup'))
+maxStartupDir = os.path.abspath(
+    os.path.join(
+        os.path.dirname(__file__), '..', 'ftrack_connect_3dsmax', 'scripts',
+        'startup'
+    )
+)
 maxStartupScript = os.path.join(maxStartupDir, 'initftrack.ms')
-connectMaxDir = os.path.abspath(os.path.join(
-    os.path.dirname(__file__), '..', 'source'))
 
 
 class LaunchAction(object):
@@ -87,8 +89,10 @@ class LaunchAction(object):
 
         items = []
         applications = self.applicationStore.applications
-        applications = sorted(applications,
-            key=lambda application: application['label'])
+        applications = sorted(
+            applications,
+            key=lambda application: application['label']
+        )
 
         for application in applications:
             applicationIdentifier = application['identifier']
@@ -122,6 +126,7 @@ class LaunchAction(object):
 
     def get_version_information(self, event):
         '''Return version information.'''
+        import ftrack_connect_3dsmax
         return dict(
             name='ftrack connect 3ds max',
             version=ftrack_connect_3dsmax.__version__
@@ -183,18 +188,6 @@ class ApplicationLauncher(ftrack_connect.application.ApplicationLauncher):
         ftrack_connect.application.appendPath(
             maxStartupDir,
             'Path',
-            environment
-        )
-
-        ftrack_connect.application.appendPath(
-            maxStartupDir,
-            'PATH',
-            environment
-        )
-
-        ftrack_connect.application.appendPath(
-            connectMaxDir,
-            'PYTHONPATH',
             environment
         )
 
