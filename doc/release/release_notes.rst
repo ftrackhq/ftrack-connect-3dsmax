@@ -7,6 +7,14 @@
 Release Notes
 *************
 
+.. release:: 0.2.8
+    :date: 2016-08-09
+
+    .. change:: changed
+        :tags: documentation
+
+        Improved screenshots in documentation articles.
+
 .. release:: 0.2.7
     :date: 2016-08-04
 
