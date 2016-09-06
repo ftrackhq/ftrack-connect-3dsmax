@@ -7,6 +7,12 @@
 Release Notes
 *************
 
+.. release:: Upcoming
+
+    .. change:: fixed
+
+        DLL Loading fails as require to have Vistual Studio redistributable packages.
+
 .. release:: 0.2.8
     :date: 2016-08-09
 
