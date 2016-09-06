@@ -1,3 +1,4 @@
+
 ..
     :copyright: Copyright (c) 2016 ftrack
 
@@ -6,6 +7,12 @@
 *************
 Release Notes
 *************
+
+.. release:: upcoming
+
+    .. change:: fixed
+
+        Nested assets do not appear in Asset Manager Dialog.
 
 .. release:: upcoming
 
