@@ -566,6 +566,22 @@ class RigAsset(GenericAsset):
         return publishedComponents, message
 
     @staticmethod
+    def importOptions():
+        '''Return import options for the component'''
+
+        xml = '''
+        <tab name="Max Options" accepts="max">
+            <row name="Import Mode" accepts="max">
+                <option type="radio" name="importMode">
+                    <optionitem name="Import" value="True"/>
+                    <optionitem name="Object XRef"/>
+                </option>
+            </row>
+        </tab>
+        '''
+        return xml
+
+    @staticmethod
     def exportOptions():
         '''Return the options for exporting the component'''
 
