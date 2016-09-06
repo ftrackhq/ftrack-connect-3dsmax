@@ -1,4 +1,3 @@
-
 ..
     :copyright: Copyright (c) 2016 ftrack
 
@@ -7,6 +6,12 @@
 *************
 Release Notes
 *************
+
+.. release:: Upcoming
+
+    .. change:: fixed
+
+        DLL Loading fails as require to have Vistual Studio redistributable packages.
 
 .. release:: upcoming
 
