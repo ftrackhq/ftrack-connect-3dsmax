@@ -1,3 +1,4 @@
+
 ..
     :copyright: Copyright (c) 2016 ftrack
 
@@ -11,7 +12,13 @@ Release Notes
 
     .. change:: fixed
 
-        Fixed nested assets in Asset Manager Dialog.
+        Nested assets do not appear in Asset Manager Dialog.
+
+.. release:: upcoming
+
+    .. change:: new
+
+        Rig assets can now be imported as Object X-Refs.
 
 .. release:: 0.2.8
     :date: 2016-08-09
