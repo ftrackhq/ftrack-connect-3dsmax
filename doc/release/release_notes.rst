@@ -7,6 +7,12 @@
 Release Notes
 *************
 
+.. release:: upcoming
+
+    .. change:: new
+
+        Rig assets can now be imported as Object X-Refs.
+
 .. release:: 0.2.8
     :date: 2016-08-09
 
