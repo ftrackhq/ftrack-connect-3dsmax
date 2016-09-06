@@ -34,7 +34,7 @@ def forEachFtrackAssetHelper(fun, recurse=False):
 def getAllFtrackAssetHelperNodes(recurse=False):
     '''Return a list of Ftrack asset helper nodes in the scene.'''
     ftrackHelperNodes = []
-    forEachFtrackAssetHelper(lambda helper: ftrackHelperNodes.append(helper))
+    forEachFtrackAssetHelper(lambda helper: ftrackHelperNodes.append(helper), recurse)
     return ftrackHelperNodes
 
 def createFtrackAssetHelper(assetName, assetId, assetVersion, assetPath,
