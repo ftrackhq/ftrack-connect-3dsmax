@@ -7,6 +7,12 @@
 Release Notes
 *************
 
+.. release:: upcoming
+
+    .. change:: fixed
+
+        Fixed nested assets in Asset Manager Dialog.
+
 .. release:: 0.2.8
     :date: 2016-08-09
 
