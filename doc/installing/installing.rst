@@ -70,6 +70,7 @@ Dependencies
 * `Python <http://python.org>`_ >= 2.6, < 3
 * `ftrack connect <https://bitbucket.org/ftrack/ftrack-connect>`_ >= 0.1.2, < 2
 * `3ds Max <http://www.autodesk.com/products/3ds-max/overview>`_ >= 2016 SP3, <= 2017
+* `Visual C++ 2015 Redistributable <https://www.microsoft.com/en-us/download/details.aspx?id=48145>`_
 
 Additional For building
 -----------------------
