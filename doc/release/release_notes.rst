@@ -7,19 +7,17 @@
 Release Notes
 *************
 
-.. release:: Upcoming
+.. release:: 0.2.9
+    :date: 2016-09-16
 
     .. change:: fixed
 
-        DLL Loading fails as require to have Vistual Studio redistributable packages.
-
-.. release:: upcoming
+        DLL Loading fails as require to have Vistual Studio redistributable
+        packages.
 
     .. change:: fixed
 
         Nested assets do not appear in Asset Manager Dialog.
-
-.. release:: upcoming
 
     .. change:: new
 
