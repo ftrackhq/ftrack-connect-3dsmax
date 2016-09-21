@@ -187,7 +187,7 @@ class ApplicationLauncher(ftrack_connect.application.ApplicationLauncher):
 
         ftrack_connect.application.appendPath(
             maxStartupDir,
-            'Path',
+            'PATH',
             environment
         )
 
