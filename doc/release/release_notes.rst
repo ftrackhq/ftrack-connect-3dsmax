@@ -7,6 +7,14 @@
 Release Notes
 *************
 
+.. release:: 0.2.10
+    :date: 2016-09-23
+
+    .. change:: fixed
+
+        Environment variables sometimes causes 3DS Max to error when launched
+        with ftrack plugin loaded.
+
 .. release:: 0.2.9
     :date: 2016-09-16
 
