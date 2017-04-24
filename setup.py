@@ -104,9 +104,11 @@ setup(
     setup_requires=[
         'sphinx >= 1.2.2, < 2',
         'sphinx_rtd_theme >= 0.1.6, < 2',
-        'lowdown >= 0.1.0, < 1'
+        'lowdown >= 0.1.0, < 1',
     ],
     install_requires=[
+        'clique==1.3.1',
+        'pyblish-base >= 1.4.3',
     ],
     tests_require=[
         'pytest >= 2.3.5, < 3'
