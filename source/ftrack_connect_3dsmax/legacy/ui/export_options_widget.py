@@ -1,13 +1,12 @@
 # :coding: utf-8
 # :copyright: Copyright (c) 2016 ftrack
 
-import os
-
-from PySide import QtCore, QtGui
-
 import ftrack
+import os
+from PySide import QtCore, QtGui
 from ftrack_connect.ui.widget.stacked_options import StackedOptionsWidget
-from ftrack_connect_3dsmax import connector as ftrack_connector
+
+from ftrack_connect_3dsmax.legacy import connector as ftrack_connector
 
 
 class Ui_ExportOptions(object):

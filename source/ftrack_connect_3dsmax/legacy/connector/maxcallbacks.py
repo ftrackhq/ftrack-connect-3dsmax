@@ -1,10 +1,6 @@
-
-import ftrack
-
 import MaxPlus
-
-import ftrack_connect.util
 import ftrack_connect.asset_version_scanner
+import ftrack_connect.util
 
 showAssetManagerAction = None
 checkForNewAssetsAndRefreshCallbackId = None
@@ -38,7 +34,7 @@ def scanForNewAssets():
     checkItems = []
     scannedFtrackHelpers = []
 
-    from ftrack_connect_3dsmax.connector.assethelper import getFtrackAssetVersionsInfo
+    from ftrack_connect_3dsmax.legacy.connector import getFtrackAssetVersionsInfo
     for (assetId, assetVersion, assetTake, helperNodeName) in getFtrackAssetVersionsInfo():
         checkItems.append({
             'asset_version_id': assetId,

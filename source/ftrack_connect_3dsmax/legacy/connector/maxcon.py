@@ -1,15 +1,13 @@
 # :coding: utf-8
 # :copyright: Copyright (c) 2016 ftrack
 
-import os
 import uuid
 
-from PySide import QtCore, QtGui
 import MaxPlus
-
-
-from ftrack_connect.connector import base as maincon
+import os
+from PySide import QtGui
 from ftrack_connect.connector import FTAssetHandlerInstance
+from ftrack_connect.connector import base as maincon
 
 from .assethelper import *
 from .assetimportmodes import *

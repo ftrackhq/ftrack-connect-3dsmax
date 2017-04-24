@@ -1,22 +1,19 @@
 # :copyright: Copyright (c) 2016 ftrack
 
-import os
-import sys
+import functools
 
 import MaxPlus
 import ftrack
-import functools
-from PySide import QtCore, QtGui
-
-from ftrack_connect.ui.widget.import_asset import FtrackImportAssetDialog
+import os
+from PySide import QtCore
 from ftrack_connect.ui.widget.asset_manager import FtrackAssetManagerDialog
+from ftrack_connect.ui.widget.import_asset import FtrackImportAssetDialog
+from ftrack_connect_3dsmax.legacy.connector import Connector
+from ftrack_connect_3dsmax.legacy.connector.maxcallbacks import *
+from ftrack_connect_3dsmax.legacy.ui.publisher import PublishAssetDialog
+from ftrack_connect_3dsmax.legacy.ui.tasks import FtrackTasksDialog
 
-from ftrack_connect_3dsmax.connector import Connector
-from ftrack_connect_3dsmax.ui.info import FtrackMaxInfoDialog
-from ftrack_connect_3dsmax.ui.publisher import PublishAssetDialog
-from ftrack_connect_3dsmax.ui.tasks import FtrackTasksDialog
-
-from ftrack_connect_3dsmax.connector.maxcallbacks import *
+from ftrack_connect_3dsmax.legacy.ui.info import FtrackMaxInfoDialog
 
 ftrack.setup()
 
