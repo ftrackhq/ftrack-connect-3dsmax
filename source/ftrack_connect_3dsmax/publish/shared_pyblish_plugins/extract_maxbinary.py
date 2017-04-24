@@ -16,7 +16,6 @@ class ExtractSceneMaxBinary(pyblish.api.InstancePlugin):
 
     def process(self, instance):
         '''Process *instance* and extract scene.'''
-        import tempfile
         import MaxPlus
         selectAll()
 
