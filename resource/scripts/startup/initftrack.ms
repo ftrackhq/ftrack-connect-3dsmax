@@ -23,6 +23,7 @@ fn ftrackCheckMaxVersion = (
 
 -- Initialize ftrack if the 3ds Max version is supported.
 if ftrackCheckMaxVersion()
-    then python.ExecuteFile("initftrack.py")
+    then python.ExecuteFile("initftrack_legacy.py")
+    then python.ExecuteFile("initftrack_publish.py")
 else
     messageBox "This version of 3ds Max is not supported.\nPlease use 3ds Max 2016 SP3 or newer." title: "Ftrack connect 3ds Max"
