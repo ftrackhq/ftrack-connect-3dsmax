@@ -10,12 +10,12 @@ import ftrack_connect_3dsmax.publish._version
 class MaxPlugin(
     ftrack_connect_pipeline.application_plugin.BaseApplicationPlugin
 ):
-    '''Define the maya plugin.'''
+    '''Define the 3dsmax plugin.'''
 
     def get_plugin_information(self):
         '''Return plugin information.'''
         return {
-            'application_id': 'maya',
+            'application_id': '3dsmax',
             'plugin_version': ftrack_connect_3dsmax.publish._version.__version__
         }
 
