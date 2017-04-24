@@ -12,7 +12,7 @@ import ftrack_connect.application
 
 maxStartupDir = os.path.abspath(
     os.path.join(
-        os.path.dirname(__file__), '..', 'ftrack_connect_3dsmax', 'legacy', 'scripts',
+        os.path.dirname(__file__), '..', 'ftrack_connect_3dsmax', 'scripts',
         'startup'
     )
 )
