@@ -4,7 +4,7 @@
 import os
 import uuid
 import pyblish.api
-
+from ftrack_connect_3dsmax.publish.utils import selectAll
 
 class ExtractSceneMaxBinary(pyblish.api.InstancePlugin):
     '''Extract scene as maya binary.'''
@@ -18,7 +18,7 @@ class ExtractSceneMaxBinary(pyblish.api.InstancePlugin):
         '''Process *instance* and extract scene.'''
         import tempfile
         import MaxPlus
-
+        selectAll()
 
         context_options = instance.context.data['options'].get(
             'maya_binary', {}
@@ -36,8 +36,6 @@ class ExtractSceneMaxBinary(pyblish.api.InstancePlugin):
         MaxPlus.FileManager.Save(temporary_path, False, False)
 
         name = instance.name
-        if name.startswith('|'):
-            name = name[1:]
 
         new_component = {
             'name': '{0}.maxbinary'.format(name),
