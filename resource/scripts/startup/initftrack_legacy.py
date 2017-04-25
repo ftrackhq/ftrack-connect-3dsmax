@@ -16,7 +16,7 @@ from ftrack_connect_3dsmax.legacy.ui.tasks import FtrackTasksDialog
 from ftrack_connect_3dsmax.legacy.ui.info import FtrackMaxInfoDialog
 
 try:
-    ftrack.setup(actions=False)
+    ftrack.setup()
 except Exception:
     pass
 

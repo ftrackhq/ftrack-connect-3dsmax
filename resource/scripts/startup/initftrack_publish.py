@@ -13,7 +13,7 @@ import ftrack_connect_pipeline.publish
 import ftrack_connect_pipeline.global_context_switch
 
 try:
-    ftrack.setup(actions=False)
+    ftrack.setup()
 except Exception:
     pass
 

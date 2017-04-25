@@ -10,6 +10,16 @@ import re
 import ftrack
 import ftrack_connect.application
 
+
+plugin_base_dir = os.path.normpath(
+    os.path.join(
+        os.path.abspath(
+            os.path.dirname(__file__)
+        ),
+        '..'
+    )
+)
+
 maxStartupDir = os.path.abspath(
     os.path.join(
         os.path.dirname(__file__), '..', 'ftrack_connect_3dsmax', 'scripts',
@@ -18,6 +28,9 @@ maxStartupDir = os.path.abspath(
 )
 maxStartupScript = os.path.join(maxStartupDir, 'initftrack.ms')
 
+application_hook = os.path.join(
+    plugin_base_dir, 'resource', 'application_hook'
+)
 
 class LaunchAction(object):
     '''ftrack connect 3ds Max discover and launch action.'''
@@ -210,6 +223,8 @@ class ApplicationLauncher(ftrack_connect.application.ApplicationLauncher):
             environment['FTRACK_TASKID'] = task.getId()
             environment['FTRACK_SHOTID'] = task.get('parent_id')
             environment['FTRACK_CONTEXT_ID'] = entity['entityId']
+
+        environment['FTRACK_EVENT_PLUGIN_PATH'] = application_hook
 
         pypath = environment['PYTHONPATH'].split(';')
         if pypath:
