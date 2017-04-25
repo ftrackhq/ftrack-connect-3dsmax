@@ -209,6 +209,7 @@ class ApplicationLauncher(ftrack_connect.application.ApplicationLauncher):
 
             environment['FTRACK_TASKID'] = task.getId()
             environment['FTRACK_SHOTID'] = task.get('parent_id')
+            environment['FTRACK_CONTEXT_ID'] = entity['entityId']
 
         pypath = environment['PYTHONPATH'].split(';')
         if pypath:

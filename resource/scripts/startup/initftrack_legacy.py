@@ -15,7 +15,10 @@ from ftrack_connect_3dsmax.legacy.ui.tasks import FtrackTasksDialog
 
 from ftrack_connect_3dsmax.legacy.ui.info import FtrackMaxInfoDialog
 
-ftrack.setup()
+try:
+    ftrack.setup(actions=False)
+except Exception:
+    pass
 
 class FtrackMenuBuilder(object):
     '''Build the Ftrack menu.'''

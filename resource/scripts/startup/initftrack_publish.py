@@ -12,7 +12,10 @@ import ftrack_connect_pipeline
 import ftrack_connect_pipeline.publish
 import ftrack_connect_pipeline.global_context_switch
 
-ftrack.setup()
+try:
+    ftrack.setup(actions=False)
+except Exception:
+    pass
 
 class FtrackPublishMenuBuilder(object):
     '''Build the Ftrack menu.'''
@@ -60,11 +63,6 @@ class DisableMaxAcceleratorsEventFilter(QtCore.QObject):
 
 
 ftrackMenuBuilder = None
-
-currentEntity = ftrack.Task(
-    os.getenv('FTRACK_TASKID',
-    os.getenv('FTRACK_SHOTID')))
-
 # Dialogs.
 publishAssetDialog = None
 changeContextDialog = None
@@ -105,23 +103,21 @@ def showPublishAssetDialog():
     global publishAssetDialog
 
     if not publishAssetDialog:
-        publishAssetDialog = functools.partial(
-            ftrack_connect_pipeline.publish.Publish, plugin=get_max_plugin()
-        )
+        publishAssetDialog = ftrack_connect_pipeline.publish.Publish(plugin=get_max_plugin())
 
-    publishAssetDialog.show()
+
+    publishAssetDialog.open()
 
 
 def showGlobalContextSwitch():
     global changeContextDialog
 
     if not changeContextDialog:
-        changeContextDialog = functools.partial(
-            ftrack_connect_pipeline.global_context_switch.GlobalContextSwitch,
+        changeContextDialog =ftrack_connect_pipeline.global_context_switch.GlobalContextSwitch(
                 plugin=get_max_plugin()
         )
 
-    changeContextDialog.show()
+    changeContextDialog.open()
 
 
 def initFtrack():
