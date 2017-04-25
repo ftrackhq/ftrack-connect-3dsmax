@@ -10,8 +10,7 @@ from ftrack_connect import connector as ftrack_connector
 from ftrack_connect.ui.theme import applyTheme
 from ftrack_connect.ui.widget import header
 from ftrack_connect.ui.widget.context_selector import ContextSelector
-from ftrack_connect_3dsmax.ui.export_asset_options_widget import ExportAssetOptionsWidget
-
+from ftrack_connect_3dsmax.legacy.ui.export_asset_options_widget import ExportAssetOptionsWidget
 from ftrack_connect_3dsmax.legacy.ui.export_options_widget import ExportOptionsWidget
 
 
