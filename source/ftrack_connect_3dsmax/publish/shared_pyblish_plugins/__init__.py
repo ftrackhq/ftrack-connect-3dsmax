@@ -7,4 +7,5 @@ def register():
     # Register shared pyblish plugins.
     import ftrack_connect_3dsmax.publish.shared_pyblish_plugins.collect
     import ftrack_connect_3dsmax.publish.shared_pyblish_plugins.collect_maxversion
+    import ftrack_connect_3dsmax.publish.shared_pyblish_plugins.extract_maxbinary
 

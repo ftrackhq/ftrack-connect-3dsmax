@@ -14,7 +14,7 @@ def filter_instances(pyblish_context):
 
 
 class PublishScene(ftrack_connect_pipeline.asset.PyblishAsset):
-    '''Handle publish of maya scene.'''
+    '''Handle publish of 3dsmax scene.'''
 
     def get_options(self):
         '''Return global options.'''
