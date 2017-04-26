@@ -2,7 +2,6 @@
 # :copyright: Copyright (c) 2017 ftrack
 
 import pyblish.api
-import MaxPlus
 
 
 class CollectMaxVersion(pyblish.api.ContextPlugin):
@@ -12,6 +11,7 @@ class CollectMaxVersion(pyblish.api.ContextPlugin):
 
     def process(self, context):
         '''Process *context* and add 3dsmax version information.'''
+        import MaxPlus
 
         context.data['software'] = {
             'name': '3dsmax',
