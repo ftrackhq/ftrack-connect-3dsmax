@@ -20,7 +20,7 @@ try:
 except Exception:
     pass
 
-class FtrackMenuBuilder(object):
+class LegacyFtrackMenuBuilder(object):
     '''Build the Ftrack menu.'''
     MENU_NAME = 'Ftrack'
 
@@ -47,7 +47,7 @@ class FtrackMenuBuilder(object):
         '''Unregister the Ftrack menu.'''
         MaxPlus.MenuManager.UnregisterMenu(self.MENU_NAME)
 
-class DisableMaxAcceleratorsEventFilter(QtCore.QObject):
+class LegacyDisableMaxAcceleratorsEventFilter(QtCore.QObject):
     """An event filter that disables the 3ds Max accelerators while a widget is
     visible. This class is used when running in Max 2016, where widgets cannot
     be parented to Max's main window, and as a result they don't get the
@@ -65,18 +65,18 @@ class DisableMaxAcceleratorsEventFilter(QtCore.QObject):
         return False
 
 connector = Connector()
-ftrackMenuBuilder = None
+legacyFtrackMenuBuilder = None
 
 currentEntity = ftrack.Task(
     os.getenv('FTRACK_TASKID',
     os.getenv('FTRACK_SHOTID')))
 
 # Dialogs.
-importAssetDialog = None
-publishAssetDialog = None
-assetManagerDialog = None
-infoDialog = None
-tasksDialog = None
+legacyImportAssetDialog = None
+legacyPublishAssetDialog = None
+legacyAssetManagerDialog = None
+legacyInfoDialog = None
+legacyTasksDialog = None
 
 def __isMax2017():
     '''Return True if the 3ds Max version is 2017'''
@@ -93,106 +93,106 @@ def __createAndInitFtrackDialog(Dialog):
     except AttributeError:
         # If running 2016, the dialog cannot be parented to Max's window.
         dialog.installEventFilter(
-            DisableMaxAcceleratorsEventFilter(dialog))
+            LegacyDisableMaxAcceleratorsEventFilter(dialog))
 
     # Make the dialog initial size bigger, as in Max by default they appear too small.
     dialog.resize(dialog.width(), 1.7 * dialog.height())
     return dialog
 
-def __createDialogAction(actionName, callback):
+def __legacyCreateDialogAction(actionName, callback):
     '''Create an action and add it to the menu builder if it is valid'''
-    global ftrackMenuBuilder
+    global legacyFtrackMenuBuilder
 
     action = MaxPlus.ActionFactory.Create(
-        actionName, actionName, callback)
+        'ftrack_legacy_' + actionName, actionName, callback)
     if action._IsValidWrapper():
-        ftrackMenuBuilder.add_item(action)
+        legacyFtrackMenuBuilder.add_item(action)
         return action
 
 def showImportAssetDialog():
     '''Create the import asset dialog if it does not exist and show it'''
-    global importAssetDialog
+    global legacyImportAssetDialog
 
-    if not importAssetDialog:
-        importAssetDialog = __createAndInitFtrackDialog(FtrackImportAssetDialog)
+    if not legacyImportAssetDialog:
+        legacyImportAssetDialog = __createAndInitFtrackDialog(FtrackImportAssetDialog)
 
     # Add some extra margins to the import asset dialog under 3ds Max 2017.
     if __isMax2017():
-        importAssetDialog.mainLayout.setContentsMargins(5, 5, 5, 5)
+        legacyImportAssetDialog.mainLayout.setContentsMargins(5, 5, 5, 5)
 
-    importAssetDialog.show()
+    legacyImportAssetDialog.show()
 
 def showPublishAssetDialog():
     '''Create the publish asset dialog if it does not exist and show it'''
-    global publishAssetDialog
+    global legacyPublishAssetDialog
 
-    if not publishAssetDialog:
-        publishAssetDialog = __createAndInitFtrackDialog(functools.partial(
+    if not legacyPublishAssetDialog:
+        legacyPublishAssetDialog = __createAndInitFtrackDialog(functools.partial(
             PublishAssetDialog, currentEntity=currentEntity))
 
     # Add some extra margins to the import asset dialog under 3ds Max 2017.
     if __isMax2017():
-        publishAssetDialog.mainLayout.setContentsMargins(5, 5, 5, 5)
+        legacyPublishAssetDialog.mainLayout.setContentsMargins(5, 5, 5, 5)
 
-    publishAssetDialog.show()
+    legacyPublishAssetDialog.show()
 
 def showAssetManagerDialog():
     '''Create the asset manager dialog if it does not exist and show it'''
-    global assetManagerDialog
+    global legacyAssetManagerDialog
 
-    if not assetManagerDialog:
-        assetManagerDialog = __createAndInitFtrackDialog(FtrackAssetManagerDialog)
+    if not legacyAssetManagerDialog:
+        legacyAssetManagerDialog = __createAndInitFtrackDialog(FtrackAssetManagerDialog)
 
         # Make some columns of the asset manager dialog wider to compensate
         # for the buttons appearing very small with Max's 2017 custom Qt stylesheet.
-        tableWidget = assetManagerDialog.assetManagerWidget.ui.AssertManagerTableWidget
+        tableWidget = legacyAssetManagerDialog.assetManagerWidget.ui.AssertManagerTableWidget
         tableWidget.setColumnWidth(0, 25)
         tableWidget.setColumnWidth(9, 35)
         tableWidget.setColumnWidth(11, 35)
         tableWidget.setColumnWidth(15, 35)
 
-    assetManagerDialog.show()
+    legacyAssetManagerDialog.show()
 
 def showInfoDialog():
     '''Create the info dialog if it does not exist and show it'''
-    global infoDialog
+    global legacyInfoDialog
 
-    if not infoDialog:
-        infoDialog = __createAndInitFtrackDialog(FtrackMaxInfoDialog)
+    if not legacyInfoDialog:
+        legacyInfoDialog = __createAndInitFtrackDialog(FtrackMaxInfoDialog)
 
-    infoDialog.show()
+    legacyInfoDialog.show()
 
 def showTasksDialog():
     '''Create the tasks dialog if it does not exist and show it'''
-    global tasksDialog
+    global legacyTasksDialog
 
-    if not tasksDialog:
-        tasksDialog = __createAndInitFtrackDialog(FtrackTasksDialog)
+    if not legacyTasksDialog:
+        legacyTasksDialog = __createAndInitFtrackDialog(FtrackTasksDialog)
 
-    tasksDialog.show()
+    legacyTasksDialog.show()
 
 
-def initFtrack():
+def initFtrackLegacy():
     '''Initialize Ftrack, register assets and build the Ftrack menu.'''
     connector.registerAssets()
 
-    global ftrackMenuBuilder
-    ftrackMenuBuilder = FtrackMenuBuilder()
+    global legacyFtrackMenuBuilder
+    legacyFtrackMenuBuilder = LegacyFtrackMenuBuilder()
 
-    __createDialogAction("Import Asset", showImportAssetDialog)
-    __createDialogAction("Publish Asset", showPublishAssetDialog)
-    ftrackMenuBuilder.add_separator()
+    __legacyCreateDialogAction("Import Asset", showImportAssetDialog)
+    __legacyCreateDialogAction("Publish Asset", showPublishAssetDialog)
+    legacyFtrackMenuBuilder.add_separator()
 
     # Save the showAssetManagerAction for later use.
-    showAssetManagerAction = __createDialogAction(
+    showAssetManagerAction = __legacyCreateDialogAction(
         "Asset Manager", showAssetManagerDialog)
 
-    ftrackMenuBuilder.add_separator()
-    __createDialogAction("Info", showInfoDialog)
-    __createDialogAction("Tasks", showTasksDialog)
+    legacyFtrackMenuBuilder.add_separator()
+    __legacyCreateDialogAction("Info", showInfoDialog)
+    __legacyCreateDialogAction("Tasks", showTasksDialog)
 
     # Create the Ftrack menu.
-    ftrackMenuBuilder.create()
+    legacyFtrackMenuBuilder.create()
 
     registerMaxOpenFileCallbacks(showAssetManagerAction)
 
@@ -200,4 +200,4 @@ def initFtrack():
     from ftrack_connect_3dsmax.legacy.connector import usage
     usage.send_event('USED-FTRACK-CONNECT-3DS-MAX')
 
-initFtrack()
+initFtrackLegacy()
