@@ -105,7 +105,6 @@ def showPublishAssetDialog():
     if not publishAssetDialog:
         publishAssetDialog = ftrack_connect_pipeline.publish.Publish(plugin=get_max_plugin())
 
-
     publishAssetDialog.open()
 
 
