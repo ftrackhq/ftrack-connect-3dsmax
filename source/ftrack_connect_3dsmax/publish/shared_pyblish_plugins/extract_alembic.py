@@ -18,13 +18,9 @@ class ExtractSceneAlembic(pyblish.api.InstancePlugin):
         '''Check if Exocortex Crate Alembic plugin is available.
         Currently, we check if the AlembicCameraProperties modifier exists.
         '''
-        return self.evalMAXScript(
+        return MaxPlus.Core.EvalMAXScript(
             'findItem modifier.classes AlembicCameraProperties != 0'
         ).Get()
-
-    def evalMAXScript(self, cmd):
-        '''Evaluate a string using MAXScript.'''
-        return MaxPlus.Core.EvalMAXScript(cmd)
 
     def exocortexExportAlembic(self, filePath, options):
         '''Export an Alembic archive.'''
@@ -67,7 +63,7 @@ class ExtractSceneAlembic(pyblish.api.InstancePlugin):
         cmd = 'ExocortexAlembic.createExportJobs(@"filename={0};{1}")'.format(
             filePath, argsString)
 
-        self.evalMAXScript(cmd)
+        MaxPlus.Core.EvalMAXScript(cmd)
 
     def process(self, instance):
         '''Process instance.'''

@@ -6,7 +6,7 @@ import uuid
 import pyblish.api
 
 class ExtractSceneMaxBinary(pyblish.api.InstancePlugin):
-    '''Extract scene as maya binary.'''
+    '''Extract scene as max binary.'''
 
     order = pyblish.api.ExtractorOrder
 
@@ -18,7 +18,7 @@ class ExtractSceneMaxBinary(pyblish.api.InstancePlugin):
         import MaxPlus
 
         context_options = instance.context.data['options'].get(
-            'maya_binary', {}
+            'max_binary', {}
         )
 
         self.log.debug(
@@ -33,7 +33,6 @@ class ExtractSceneMaxBinary(pyblish.api.InstancePlugin):
         MaxPlus.FileManager.Save(temporary_path, False, False)
 
         name = instance.name
-
         new_component = {
             'name': '{0}.maxbinary'.format(name),
             'path': temporary_path,
