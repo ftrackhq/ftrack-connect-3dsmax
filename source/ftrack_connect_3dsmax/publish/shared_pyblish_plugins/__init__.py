@@ -9,4 +9,3 @@ def register():
     import ftrack_connect_3dsmax.publish.shared_pyblish_plugins.collect_maxversion
     import ftrack_connect_3dsmax.publish.shared_pyblish_plugins.extract_maxbinary
     import ftrack_connect_3dsmax.publish.shared_pyblish_plugins.extract_alembic
-

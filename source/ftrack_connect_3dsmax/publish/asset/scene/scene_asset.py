@@ -5,7 +5,7 @@ import ftrack_connect_pipeline.asset
 
 
 def filter_instances(pyblish_context):
-    '''Return camera instances from *pyblish_context*.'''
+    '''Return scene instances from *pyblish_context*.'''
     match = set(['scene', 'ftrack'])
     return filter(
         lambda instance: match.issubset(instance.data['families']),

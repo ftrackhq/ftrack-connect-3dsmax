@@ -17,7 +17,6 @@ def create_asset_publish():
         description='publish 3dsmax scene to ftrack.',
         enable_scene_as_reference=False,
         asset_type_short=FTRACK_ASSET_TYPE
-
     )
 
 

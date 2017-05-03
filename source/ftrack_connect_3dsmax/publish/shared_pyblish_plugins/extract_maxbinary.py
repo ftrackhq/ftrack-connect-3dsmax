@@ -22,7 +22,7 @@ class ExtractSceneMaxBinary(pyblish.api.InstancePlugin):
         )
 
         self.log.debug(
-            'Started extracting camera {0!r} with options '
+            'Started extracting scene {0!r} with options '
             '{1!r}.'.format(
                 instance.name, context_options
             )
