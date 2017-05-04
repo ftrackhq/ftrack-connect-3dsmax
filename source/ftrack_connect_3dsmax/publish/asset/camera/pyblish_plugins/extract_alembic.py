@@ -6,6 +6,7 @@ import uuid
 import pyblish.api
 import MaxPlus
 
+
 class ExtractCameraAlembic(pyblish.api.InstancePlugin):
     '''Extract camera as alembic.'''
 
@@ -25,6 +26,7 @@ class ExtractCameraAlembic(pyblish.api.InstancePlugin):
     def process(self, instance):
         '''Process instance.'''
 
+        # Get the options.
         context_options = instance.context.data['options'].get(
             'alembic', {}
         )
@@ -36,36 +38,50 @@ class ExtractCameraAlembic(pyblish.api.InstancePlugin):
         )
 
         # Save and clear the selection.
-        savedSelection = MaxPlus.SelectionManager.GetNodes()
+        saved_selection = MaxPlus.SelectionManager.GetNodes()
         MaxPlus.Core.EvalMAXScript('max select none')
+        MaxPlus.Core.EvalMAXScript('select ${0}'.format(str(instance)))
 
-        camera = str(instance)
-        MaxPlus.Core.EvalMAXScript('select {0}'.format(camera))
+        # Get the scene time range. In Max each frame is divided in 160 ticks.
+        time_slider_range = MaxPlus.Animation.GetAnimRange()
+        ticks_per_frame = 160
 
-        # timeSliderRange = MaxPlus.Animation.GetAnimRange()
-        # print range.Start() / 160 # Each frame in Max is 160 units.
-        # print range.End() / 160
-
-        jobArgs = [
-            'exportSelected=true'
-            # 'flattenHierarchy=true'
-            # 'in={0}'.format(options['frameStart'])
-            # 'out={0}'.format(options['frameEnd'])
-            # 'subStep={0}'.format(int(math.ceil(steps)))
+        # Prepare alembic export args.
+        job_args = [
+            'exportSelected=true',
+            'flattenHierarchy=false',
+            'in={0}'.format(time_slider_range.Start() / ticks_per_frame),
+            'out={0}'.format(time_slider_range.End() / ticks_per_frame),
+            'subStep=1'
         ]
 
-        temporaryPath = os.path.join(
+        # Export the alembic file.
+        temporary_path = os.path.join(
             MaxPlus.PathManager.GetTempDir() + uuid.uuid4().hex + '.abc')
 
-        argsString = ';'.join(jobArgs)
         cmd = 'ExocortexAlembic.createExportJobs(@"filename={0};{1}")'.format(
-            temporaryPath,
-            argsString
+            temporary_path,
+            ';'.join(job_args)
         )
-        # MaxPlus.Core.EvalMAXScript(cmd)
+        MaxPlus.Core.EvalMAXScript(cmd)
+
+        # Save component info.
+        name = instance.name
+        new_component = {
+            'name': '{0}.alembic'.format(name),
+            'path': temporary_path,
+        }
+
+        instance.data['ftrack_components'].append(new_component)
+
+        self.log.debug(
+            'Extracted {0!r} from {1!r}'.format(new_component, instance.name)
+        )
 
         # Restore the selection.
-        MaxPlus.SelectionManager.SelectNodes(savedSelection)
+        MaxPlus.Core.EvalMAXScript('max select none')
+        MaxPlus.SelectionManager.SelectNodes(saved_selection)
 
 
 pyblish.api.register_plugin(ExtractCameraAlembic)
+

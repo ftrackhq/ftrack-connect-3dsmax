@@ -23,13 +23,75 @@ class PublishCamera(ftrack_connect_pipeline.asset.PyblishAsset):
                 'type': 'group',
                 'label': '3dsMax binary',
                 'name': 'max_binary',
-                'options': []
+                'options': [{
+                    'name': 'reference',
+                    'label': 'Reference',
+                    'type': 'boolean',
+                }, {
+                    'name': 'history',
+                    'label': 'History',
+                    'type': 'boolean',
+                }, {
+                    'name': 'channels',
+                    'label': 'Channels',
+                    'type': 'boolean',
+                    'value': True
+                }, {
+                    'name': 'expressions',
+                    'label': 'Expressions',
+                    'type': 'boolean',
+                    'value': True
+                }, {
+                    'name': 'constraints',
+                    'label': 'Constraints',
+                    'type': 'boolean',
+                    'value': True
+                }, {
+                    'name': 'shaders',
+                    'label': 'Shaders',
+                    'type': 'boolean',
+                    'value': True
+                }]
             },
             {
                 'type': 'group',
                 'label': 'Alembic',
                 'name': 'alembic',
-                'options': []
+                'options': [{
+                    'name': 'include_animation',
+                    'label': 'Include animation',
+                    'type': 'boolean',
+                    'value': True
+                }, {
+                    'name': 'uv_write',
+                    'label': 'UV write',
+                    'type': 'boolean',
+                    'value': True
+                }, {
+                    'name': 'world_space',
+                    'label': 'World space',
+                    'type': 'boolean',
+                    'value': True
+                }, {
+                    'name': 'write_visibility',
+                    'label': 'Write visibility',
+                    'type': 'boolean',
+                    'value': True
+                }]
+            },
+            {
+                'type': 'group',
+                'label': 'Camera options',
+                'name': 'camera_options',
+                'options': [{
+                    'name': 'lock',
+                    'label': 'Lock',
+                    'type': 'boolean'
+                }, {
+                    'name': 'bake',
+                    'label': 'Bake',
+                    'type': 'boolean'
+                }]
             }
         ]
 

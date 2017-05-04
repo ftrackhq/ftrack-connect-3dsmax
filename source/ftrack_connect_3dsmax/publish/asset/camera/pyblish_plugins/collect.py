@@ -4,6 +4,7 @@
 import pyblish.api
 import MaxPlus
 
+
 class CollectCameras(pyblish.api.ContextPlugin):
     '''Collect cameras from 3DS Max.'''
 
