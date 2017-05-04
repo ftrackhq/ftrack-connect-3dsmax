@@ -34,7 +34,7 @@ def scanForNewAssets():
     checkItems = []
     scannedFtrackHelpers = []
 
-    from ftrack_connect_3dsmax.legacy.connector import getFtrackAssetVersionsInfo
+    from ftrack_connect_3dsmax.legacy.connector.assethelper import getFtrackAssetVersionsInfo
     for (assetId, assetVersion, assetTake, helperNodeName) in getFtrackAssetVersionsInfo():
         checkItems.append({
             'asset_version_id': assetId,
