@@ -72,7 +72,7 @@ class ExtractSceneAlembic(pyblish.api.InstancePlugin):
             return
 
         temporary_path = os.path.join(
-            MaxPlus.PathManager.GetTempDir() + uuid.uuid4().hex + '.abc'
+            MaxPlus.PathManager.GetTempDir(), uuid.uuid4().hex + '.abc'
         )
 
         # TODO PASS OPTIONS

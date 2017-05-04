@@ -29,7 +29,7 @@ class ExtractSceneMaxBinary(pyblish.api.InstancePlugin):
         )
 
         temporary_path = os.path.join(
-            MaxPlus.PathManager.GetTempDir() + uuid.uuid4().hex + '.max')
+            MaxPlus.PathManager.GetTempDir(), uuid.uuid4().hex + '.max')
         MaxPlus.FileManager.Save(temporary_path, False, False)
 
         name = instance.name

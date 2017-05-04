@@ -57,7 +57,7 @@ class ExtractCameraAlembic(pyblish.api.InstancePlugin):
 
         # Export the alembic file.
         temporary_path = os.path.join(
-            MaxPlus.PathManager.GetTempDir() + uuid.uuid4().hex + '.abc')
+            MaxPlus.PathManager.GetTempDir(), uuid.uuid4().hex + '.abc')
 
         cmd = 'ExocortexAlembic.createExportJobs(@"filename={0};{1}")'.format(
             temporary_path,

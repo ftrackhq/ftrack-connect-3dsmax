@@ -36,7 +36,7 @@ class ExtractCameraMaxBinary(pyblish.api.InstancePlugin):
 
         # Write the Max scene.
         temporary_path = os.path.join(
-            MaxPlus.PathManager.GetTempDir() + uuid.uuid4().hex + '.max')
+            MaxPlus.PathManager.GetTempDir(), uuid.uuid4().hex + '.max')
         MaxPlus.FileManager.SaveSelected(temporary_path)
 
         # Save component info.

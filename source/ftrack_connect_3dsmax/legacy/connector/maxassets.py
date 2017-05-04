@@ -206,7 +206,7 @@ class GenericAsset(FTAssetType):
         publishedComponents = []
 
         temporaryPath = os.path.join(
-            MaxPlus.PathManager.GetTempDir() + uuid.uuid4().hex + '.max')
+            MaxPlus.PathManager.GetTempDir(), uuid.uuid4().hex + '.max')
 
         if exportSelectedMode:
             MaxPlus.FileManager.SaveSelected(temporaryPath)
@@ -303,7 +303,7 @@ class GeometryAsset(GenericAsset):
         if iAObj.options.get('alembic'):
             if exocortexAlembicAvailable():
                 temporaryPath = os.path.join(
-                    MaxPlus.PathManager.GetTempDir() + uuid.uuid4().hex + '.abc')
+                    MaxPlus.PathManager.GetTempDir(), uuid.uuid4().hex + '.abc')
 
                 publishedComponents.append(
                     FTComponent(
@@ -461,7 +461,7 @@ class CameraAsset(GenericAsset):
         if iAObj.options.get('alembic'):
             if exocortexAlembicAvailable():
                 temporaryPath = os.path.join(
-                    MaxPlus.PathManager.GetTempDir() + uuid.uuid4().hex + '.abc')
+                    MaxPlus.PathManager.GetTempDir(), uuid.uuid4().hex + '.abc')
 
                 publishedComponents.append(
                     FTComponent(
