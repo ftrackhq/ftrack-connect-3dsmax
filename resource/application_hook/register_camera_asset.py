@@ -8,12 +8,12 @@ import ftrack_connect_pipeline.asset
 
 from ftrack_connect_3dsmax.publish.asset.camera import camera_asset
 
-FTRACK_ASSET_TYPE = 'camera'
+FTRACK_ASSET_TYPE = 'cam'
 
 
 def create_asset_publish():
     '''Return asset publisher.'''
-    return scene_asset.PublishCamera(
+    return camera_asset.PublishCamera(
         description='publish 3dsmax camera to ftrack.',
         enable_scene_as_reference=False,
         asset_type_short=FTRACK_ASSET_TYPE
