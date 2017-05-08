@@ -1,5 +1,5 @@
 # :coding: utf-8
-# :copyright: Copyright (c) 2016 ftrack
+# :copyright: Copyright (c) 2017 ftrack
 
 import functools
 
@@ -25,7 +25,7 @@ def register_asset_plugin(session, event):
     camera = ftrack_connect_pipeline.asset.Asset(
         identifier=FTRACK_ASSET_TYPE,
         label='Camera',
-        icon='camera',
+        icon='videocam',
         create_asset_publish=create_asset_publish
     )
     camera.register(session)
