@@ -2,7 +2,6 @@
 # :copyright: Copyright (c) 2017 ftrack
 
 import pyblish.api
-import MaxPlus
 
 
 class CollectLightRigs(pyblish.api.ContextPlugin):
@@ -22,6 +21,7 @@ class CollectLightRigs(pyblish.api.ContextPlugin):
 
     def process(self, context):
         '''Process *context* and add max light rig instances.'''
+        import MaxPlus
 
         # Build a set with the selection to check quickly if a node is selected.
         selection = set()

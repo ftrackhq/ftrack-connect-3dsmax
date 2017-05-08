@@ -4,7 +4,6 @@
 import os
 import uuid
 import pyblish.api
-import MaxPlus
 
 
 class ExtractCameraAlembic(pyblish.api.InstancePlugin):
@@ -19,12 +18,14 @@ class ExtractCameraAlembic(pyblish.api.InstancePlugin):
         '''Check if Exocortex Crate Alembic plugin is available.
         Currently, we check if the AlembicCameraProperties modifier exists.
         '''
+        import MaxPlus
         return MaxPlus.Core.EvalMAXScript(
             'findItem modifier.classes AlembicCameraProperties != 0'
         ).Get()
 
     def process(self, instance):
         '''Process instance.'''
+        import MaxPlus
 
         # Get the options.
         context_options = instance.context.data['options'].get(

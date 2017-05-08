@@ -4,7 +4,6 @@
 import os
 import uuid
 import pyblish.api
-import MaxPlus
 
 class ExtractSceneAlembic(pyblish.api.InstancePlugin):
     '''Extract scene as alembic.'''
@@ -18,12 +17,15 @@ class ExtractSceneAlembic(pyblish.api.InstancePlugin):
         '''Check if Exocortex Crate Alembic plugin is available.
         Currently, we check if the AlembicCameraProperties modifier exists.
         '''
+        import MaxPlus
         return MaxPlus.Core.EvalMAXScript(
             'findItem modifier.classes AlembicCameraProperties != 0'
         ).Get()
 
     def exocortexExportAlembic(self, filePath, options):
         '''Export an Alembic archive.'''
+        import MaxPlus
+
         jobArgs = []
 
         if options.get('alembicExportMode') == 'Selection':
@@ -67,6 +69,8 @@ class ExtractSceneAlembic(pyblish.api.InstancePlugin):
 
     def process(self, instance):
         '''Process instance.'''
+        import MaxPlus
+
         if not self.exocortexAlembicAvailable():
             self.log.warning('Exocortex plugin not available')
             return

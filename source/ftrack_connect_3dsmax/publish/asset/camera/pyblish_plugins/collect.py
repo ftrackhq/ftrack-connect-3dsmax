@@ -2,7 +2,6 @@
 # :copyright: Copyright (c) 2016 ftrack
 
 import pyblish.api
-import MaxPlus
 
 
 class CollectCameras(pyblish.api.ContextPlugin):
@@ -33,6 +32,7 @@ class CollectCameras(pyblish.api.ContextPlugin):
 
     def process(self, context):
         '''Process *context* and add max camera instances.'''
+        import MaxPlus
 
         # Build a set with the selection to check quickly if a node is selected.
         selection = set()

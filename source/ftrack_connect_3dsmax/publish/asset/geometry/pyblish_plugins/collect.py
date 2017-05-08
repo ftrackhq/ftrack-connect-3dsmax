@@ -2,7 +2,6 @@
 # :copyright: Copyright (c) 2017 ftrack
 
 import pyblish.api
-import MaxPlus
 
 
 class CollectGeometries(pyblish.api.ContextPlugin):
@@ -37,6 +36,7 @@ class CollectGeometries(pyblish.api.ContextPlugin):
 
     def process(self, context):
         '''Process *context* and add max geometry instances.'''
+        import MaxPlus
 
         # Build a set with the selection to check quickly if a node is selected.
         selection = set()

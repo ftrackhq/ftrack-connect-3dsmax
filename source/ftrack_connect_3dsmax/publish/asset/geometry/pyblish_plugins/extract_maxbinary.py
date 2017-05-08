@@ -4,7 +4,6 @@
 import os
 import uuid
 import pyblish.api
-import MaxPlus
 
 
 class ExtractGeometryMaxBinary(pyblish.api.InstancePlugin):
@@ -17,6 +16,7 @@ class ExtractGeometryMaxBinary(pyblish.api.InstancePlugin):
 
     def process(self, instance):
         '''Process instance.'''
+        import MaxPlus
 
         # Get the options.
         context_options = instance.context.data['options'].get(

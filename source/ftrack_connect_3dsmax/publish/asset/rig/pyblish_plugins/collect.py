@@ -2,7 +2,6 @@
 # :copyright: Copyright (c) 2017 ftrack
 
 import pyblish.api
-import MaxPlus
 
 
 class CollectRigs(pyblish.api.ContextPlugin):
@@ -13,6 +12,7 @@ class CollectRigs(pyblish.api.ContextPlugin):
     def process(self, context):
         '''Process *context* and add a max rig instance.'''
         self.log.debug('Started collecting geometry from scene.')
+        import MaxPlus
 
         instance = context.create_instance(
             'rig', families=['ftrack', 'rig']
