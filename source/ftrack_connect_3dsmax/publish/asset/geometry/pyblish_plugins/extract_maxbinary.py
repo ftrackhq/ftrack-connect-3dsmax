@@ -29,7 +29,7 @@ class ExtractGeometryMaxBinary(pyblish.api.InstancePlugin):
             )
         )
 
-        # Save the selection and select our root node.
+        # Save the selection and select our geometry root node.
         saved_selection = MaxPlus.SelectionManager.GetNodes()
         MaxPlus.Core.EvalMAXScript('max select none')
         MaxPlus.Core.EvalMAXScript('select ${0}'.format(str(instance)))

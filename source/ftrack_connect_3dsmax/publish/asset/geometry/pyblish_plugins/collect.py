@@ -53,7 +53,7 @@ class CollectGeometries(pyblish.api.ContextPlugin):
                     name, families=['ftrack', 'geometry']
                 )
 
-                instance.data['publish'] = node in selection
+                instance.data['publish'] = name in selection
                 instance.data['ftrack_components'] = []
 
                 self.log.debug(

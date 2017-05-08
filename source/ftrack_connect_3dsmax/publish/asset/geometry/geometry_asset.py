@@ -95,7 +95,7 @@ class PublishGeometry(ftrack_connect_pipeline.asset.PyblishAsset):
             }
         ]
 
-        default_options = super(Geometry, self).get_options()
+        default_options = super(PublishGeometry, self).get_options()
 
         return default_options + options
 

@@ -6,7 +6,7 @@ import ftrack_connect_pipeline.asset
 
 def filter_instances(pyblish_context):
     '''Return geometry instances from *pyblish_context*.'''
-    match = set(['geometry', 'ftrack'])
+    match = set(['rig', 'ftrack'])
     return filter(
         lambda instance: match.issubset(instance.data['families']),
         pyblish_context
