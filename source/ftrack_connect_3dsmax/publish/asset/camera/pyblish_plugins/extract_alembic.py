@@ -27,7 +27,12 @@ class ExtractCameraAlembic(pyblish.api.InstancePlugin):
         '''Process instance.'''
         import MaxPlus
 
-        # Get the options.
+        # Save and clear the selection.
+        saved_selection = MaxPlus.SelectionManager.GetNodes()
+        MaxPlus.Core.EvalMAXScript('max select none')
+        MaxPlus.Core.EvalMAXScript('select ${0}'.format(str(instance)))
+
+        # Extract options.
         context_options = instance.context.data['options'].get(
             'alembic', {}
         )
@@ -38,23 +43,24 @@ class ExtractCameraAlembic(pyblish.api.InstancePlugin):
             )
         )
 
-        # Save and clear the selection.
-        saved_selection = MaxPlus.SelectionManager.GetNodes()
-        MaxPlus.Core.EvalMAXScript('max select none')
-        MaxPlus.Core.EvalMAXScript('select ${0}'.format(str(instance)))
-
-        # Get the scene time range. In Max each frame is divided in 160 ticks.
-        time_slider_range = MaxPlus.Animation.GetAnimRange()
-        ticks_per_frame = 160
-
         # Prepare alembic export args.
         job_args = [
             'exportSelected=true',
-            'flattenHierarchy=false',
-            'in={0}'.format(time_slider_range.Start() / ticks_per_frame),
-            'out={0}'.format(time_slider_range.End() / ticks_per_frame),
-            'subStep=1'
+            'flattenHierarchy=false'
         ]
+
+        if  context_options.get('include_animation', False):
+            ticks_per_frame = MaxPlus.Core.EvalMAXScript('ticksperframe').GetInt()
+            current_start_frame =  MaxPlus.Animation.GetAnimRange().Start() / ticks
+            current_end_frame =  MaxPlus.Animation.GetAnimRange().End() / ticks
+            sampling = context_options.get('sampling', 1.0)
+
+            jobArgs.append('in={0}'.format(context_options.get('start_frame', current_start_frame))
+            jobArgs.append('out={0}'.format(context_options.get('end_frame', current_end_frame))
+            jobArgs.append('subStep={0}'.format(int(math.ceil(sampling))))
+        else:
+            jobArgs.append('in=0')
+            jobArgs.append('out=0')
 
         # Export the alembic file.
         temporary_path = os.path.join(

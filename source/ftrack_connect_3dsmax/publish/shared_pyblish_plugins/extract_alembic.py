@@ -26,16 +26,7 @@ class ExtractSceneAlembic(pyblish.api.InstancePlugin):
         '''Export an Alembic archive.'''
         import MaxPlus
 
-        jobArgs = []
-
-        if options.get('alembicExportMode') == 'Selection':
-            jobArgs.append('exportSelected=true')
-
-            # Check if the selection is empty and abort if it is.
-            if MaxPlus.SelectionManager.GetNodes().GetCount() == 0:
-                raise RuntimeError('Selection is empty')
-        else:
-            jobArgs.append('exportSelected=false')
+        jobArgs = ['exportSelected=false']
 
         if options.get('alembicNormalsWrite'):
             jobArgs.append('normals=true')
@@ -75,12 +66,36 @@ class ExtractSceneAlembic(pyblish.api.InstancePlugin):
             self.log.warning('Exocortex plugin not available')
             return
 
+        ticks = MaxPlus.Core.EvalMAXScript('ticksperframe').GetInt()
+        current_start_frame =  MaxPlus.Animation.GetAnimRange().Start() / ticks
+        current_end_frame =  MaxPlus.Animation.GetAnimRange().End() / ticks
+
+        # Extract options.
+        context_options = instance.context.data['options'].get(
+            'alembic', {}
+        )
+        animation = context_options.get('include_animation', False)
+        uv_write = context_options.get('uv_write', True)
+        normals_write = context_options.get('normals_write', True)
+        start_frame = context_options.get('start_frame', current_start_frame)
+        end_frame = context_options.get('end_frame', current_end_frame)
+        sampling = context_options.get('sampling', 1.0)
+
+        # Export the alembic file.
         temporary_path = os.path.join(
             MaxPlus.PathManager.GetTempDir(), uuid.uuid4().hex + '.abc'
         )
 
-        # TODO PASS OPTIONS
-        self.exocortexExportAlembic(temporary_path, {})
+        self.exocortexExportAlembic(
+            filePath=temporary_path,
+            options={
+                'alembicNormalsWrite' : normals_write,
+                'alembicUVWrite' : uv_write,
+                'alembicAnimation' : animation,
+                'frameStart' : start_frame,
+                'frameEnd' : end_frame,
+                'samplesPerFrame' : sampling
+            })
 
         name = instance.name
 
