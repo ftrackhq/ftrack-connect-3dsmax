@@ -23,35 +23,7 @@ class PublishScene(ftrack_connect_pipeline.asset.PyblishAsset):
                 'type': 'group',
                 'label': '3dsMax binary',
                 'name': 'max_binary',
-                'options': [{
-                    'name': 'reference',
-                    'label': 'Reference',
-                    'type': 'boolean',
-                }, {
-                    'name': 'history',
-                    'label': 'History',
-                    'type': 'boolean',
-                }, {
-                    'name': 'channels',
-                    'label': 'Channels',
-                    'type': 'boolean',
-                    'value': True
-                }, {
-                    'name': 'expressions',
-                    'label': 'Expressions',
-                    'type': 'boolean',
-                    'value': True
-                }, {
-                    'name': 'constraints',
-                    'label': 'Constraints',
-                    'type': 'boolean',
-                    'value': True
-                }, {
-                    'name': 'shaders',
-                    'label': 'Shaders',
-                    'type': 'boolean',
-                    'value': True
-                }]
+                'options': []
             },
             {
                 'type': 'group',
@@ -68,13 +40,8 @@ class PublishScene(ftrack_connect_pipeline.asset.PyblishAsset):
                     'type': 'boolean',
                     'value': True
                 }, {
-                    'name': 'world_space',
-                    'label': 'World space',
-                    'type': 'boolean',
-                    'value': True
-                }, {
-                    'name': 'write_visibility',
-                    'label': 'Write visibility',
+                    'name': 'normals_write',
+                    'label': 'Normals write',
                     'type': 'boolean',
                     'value': True
                 }]
