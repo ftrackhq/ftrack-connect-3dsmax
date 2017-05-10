@@ -12,7 +12,9 @@ class CollectGeometries(pyblish.api.ContextPlugin):
     # From Max's SDK headers.
     GEN_DERIVOB_SUPERCLASS_ID   = 0x0002
     GEOM_SUPERCLASS_ID          = 0x0010
-    UTILITY_CLASS_ID            = 0x1020
+    SHAPE_SUPERCLASS_ID         = 0x0040
+    UTILITY_CLASS_ID_PART_A     = 0x1020
+    BONE_CLASS_ID               = (0x28bf6e8d, 0x2ecca840)
 
     def __contains_geom_as_children(self, node):
         for n in node.Children:
@@ -25,9 +27,14 @@ class CollectGeometries(pyblish.api.ContextPlugin):
         if superclass_id == self.GEOM_SUPERCLASS_ID:
             class_id = obj.ClassID
 
-            if class_id.GetPartA() == self.UTILITY_CLASS_ID:
+            if class_id.GetPartA() == self.UTILITY_CLASS_ID_PART_A:
                 return False # Skip utility classes.
 
+            if (class_id.GetPartA(), class_id.GetPartB()) == self.BONE_CLASS_ID:
+                return False # Skip bones.
+
+            return True
+        elif superclass_id == self.SHAPE_SUPERCLASS_ID:
             return True
         elif superclass_id == self.GEN_DERIVOB_SUPERCLASS_ID:
             return True
