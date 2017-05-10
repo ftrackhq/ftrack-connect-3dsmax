@@ -3,6 +3,7 @@
 
 import os
 import uuid
+import math
 import pyblish.api
 
 class ExtractGeometryAlembic(pyblish.api.InstancePlugin):

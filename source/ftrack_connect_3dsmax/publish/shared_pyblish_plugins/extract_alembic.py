@@ -3,6 +3,7 @@
 
 import os
 import uuid
+import math
 import pyblish.api
 
 class ExtractSceneAlembic(pyblish.api.InstancePlugin):
