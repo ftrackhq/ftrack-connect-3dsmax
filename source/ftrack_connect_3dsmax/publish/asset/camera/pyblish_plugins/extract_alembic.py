@@ -24,13 +24,17 @@ class ExtractCameraAlembic(pyblish.api.InstancePlugin):
             'findItem modifier.classes AlembicCameraProperties != 0'
         ).Get()
 
+    def deselect_all(self):
+        import MaxPlus
+        MaxPlus.SelectionManager.ClearNodeSelection()
+
     def process(self, instance):
         '''Process instance.'''
         import MaxPlus
 
-        # Save and clear the selection.
+        # Save and clear the selection, select our camera.
         saved_selection = MaxPlus.SelectionManager.GetNodes()
-        MaxPlus.Core.EvalMAXScript('max select none')
+        self.deselect_all()
         MaxPlus.Core.EvalMAXScript('select ${0}'.format(str(instance)))
 
         # Extract options.
@@ -87,7 +91,7 @@ class ExtractCameraAlembic(pyblish.api.InstancePlugin):
         )
 
         # Restore the selection.
-        MaxPlus.Core.EvalMAXScript('max select none')
+        self.deselect_all()
         MaxPlus.SelectionManager.SelectNodes(saved_selection)
 
 

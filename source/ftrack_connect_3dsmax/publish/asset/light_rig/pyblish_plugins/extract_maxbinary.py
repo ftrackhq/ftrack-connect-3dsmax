@@ -14,6 +14,16 @@ class ExtractLightRigMaxBinary(pyblish.api.InstancePlugin):
     families = ['ftrack', 'light']
     match = pyblish.api.Subset
 
+    def deselect_all(self):
+        import MaxPlus
+        MaxPlus.SelectionManager.ClearNodeSelection()
+
+    def select_hierarchy(self, node):
+        import MaxPlus
+        MaxPlus.SelectionManager.SelectNode(node, False)
+        for c in node.Children:
+            self.select_hierarchy(c)
+
     def process(self, instance):
         '''Process instance.'''
         import MaxPlus
@@ -29,10 +39,13 @@ class ExtractLightRigMaxBinary(pyblish.api.InstancePlugin):
             )
         )
 
-        # Save the selection and select our root node.
+        # Save and clear the selection.
         saved_selection = MaxPlus.SelectionManager.GetNodes()
-        MaxPlus.Core.EvalMAXScript('max select none')
-        MaxPlus.Core.EvalMAXScript('select ${0}'.format(str(instance)))
+        self.deselect_all()
+
+        # Select our node and all its children.
+        node = MaxPlus.INode.GetINodeByName(str(instance))
+        self.select_hierarchy(node)
 
         # Write the Max scene.
         temporary_path = os.path.join(
@@ -53,7 +66,7 @@ class ExtractLightRigMaxBinary(pyblish.api.InstancePlugin):
         )
 
         # Restore the selection.
-        MaxPlus.Core.EvalMAXScript('max select none')
+        self.deselect_all()
         MaxPlus.SelectionManager.SelectNodes(saved_selection)
 
 

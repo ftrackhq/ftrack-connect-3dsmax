@@ -14,6 +14,10 @@ class ExtractCameraMaxBinary(pyblish.api.InstancePlugin):
     families = ['ftrack', 'camera']
     match = pyblish.api.Subset
 
+    def deselect_all(self):
+        import MaxPlus
+        MaxPlus.SelectionManager.ClearNodeSelection()
+
     def process(self, instance):
         '''Process instance.'''
         import MaxPlus
@@ -31,7 +35,7 @@ class ExtractCameraMaxBinary(pyblish.api.InstancePlugin):
 
         # Save the selection and select our camera.
         saved_selection = MaxPlus.SelectionManager.GetNodes()
-        MaxPlus.Core.EvalMAXScript('max select none')
+        self.deselect_all()
         MaxPlus.Core.EvalMAXScript('select ${0}'.format(str(instance)))
 
         # Write the Max scene.
@@ -53,7 +57,7 @@ class ExtractCameraMaxBinary(pyblish.api.InstancePlugin):
         )
 
         # Restore the selection.
-        MaxPlus.Core.EvalMAXScript('max select none')
+        self.deselect_all()
         MaxPlus.SelectionManager.SelectNodes(saved_selection)
 
 

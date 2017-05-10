@@ -59,6 +59,16 @@ class ExtractGeometryAlembic(pyblish.api.InstancePlugin):
 
         MaxPlus.Core.EvalMAXScript(cmd)
 
+    def deselect_all(self):
+        import MaxPlus
+        MaxPlus.SelectionManager.ClearNodeSelection()
+
+    def select_hierarchy(self, node):
+        import MaxPlus
+        MaxPlus.SelectionManager.SelectNode(node, False)
+        for c in node.Children:
+            self.select_hierarchy(c)
+
     def process(self, instance):
         '''Process instance.'''
         import MaxPlus
@@ -69,8 +79,11 @@ class ExtractGeometryAlembic(pyblish.api.InstancePlugin):
 
         # Save and clear the selection.
         saved_selection = MaxPlus.SelectionManager.GetNodes()
-        MaxPlus.Core.EvalMAXScript('max select none')
-        MaxPlus.Core.EvalMAXScript('select ${0}'.format(str(instance)))
+        self.deselect_all()
+
+        # Select our node and all its children.
+        node = MaxPlus.INode.GetINodeByName(str(instance))
+        self.select_hierarchy(node)
 
         # Extract options.
         context_options = instance.context.data['options'].get(
@@ -125,7 +138,7 @@ class ExtractGeometryAlembic(pyblish.api.InstancePlugin):
         )
 
         # Restore the selection.
-        MaxPlus.Core.EvalMAXScript('max select none')
+        self.deselect_all()
         MaxPlus.SelectionManager.SelectNodes(saved_selection)
 
 pyblish.api.register_plugin(ExtractGeometryAlembic)
