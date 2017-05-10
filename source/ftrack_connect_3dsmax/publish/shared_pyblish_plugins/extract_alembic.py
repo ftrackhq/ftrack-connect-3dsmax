@@ -23,39 +23,39 @@ class ExtractSceneAlembic(pyblish.api.InstancePlugin):
             'findItem modifier.classes AlembicCameraProperties != 0'
         ).Get()
 
-    def exocortexExportAlembic(self, filePath, options):
+    def exocortexExportAlembic(self, file_path, options):
         '''Export an Alembic archive.'''
         import MaxPlus
 
-        jobArgs = ['exportSelected=false']
+        job_args = ['exportSelected=false']
 
         if options.get('alembicNormalsWrite'):
-            jobArgs.append('normals=true')
+            job_args.append('normals=true')
         else:
-            jobArgs.append('normals=false')
+            job_args.append('normals=false')
 
         if options.get('alembicUVWrite'):
-            jobArgs.append('uvs=true')
+            job_args.append('uvs=true')
         else:
-            jobArgs.append('uvs=false')
+            job_args.append('uvs=false')
 
         if options.get('alembicFlattenHierarchy'):
-            jobArgs.append('flattenHierarchy=true')
+            job_args.append('flattenHierarchy=true')
         else:
-            jobArgs.append('flattenHierarchy=false')
+            job_args.append('flattenHierarchy=false')
 
         if options.get('alembicAnimation'):
-            jobArgs.append('in={0}'.format(options['frameStart']))
-            jobArgs.append('out={0}'.format(options['frameEnd']))
+            job_args.append('in={0}'.format(options['frameStart']))
+            job_args.append('out={0}'.format(options['frameEnd']))
             steps = options.get('samplesPerFrame', 1.0)
-            jobArgs.append('subStep={0}'.format(int(math.ceil(steps))))
+            job_args.append('subStep={0}'.format(int(math.ceil(steps))))
         else:
-            jobArgs.append('in=0')
-            jobArgs.append('out=0')
+            job_args.append('in=0')
+            job_args.append('out=0')
 
-        argsString = ';'.join(jobArgs)
+        argsString = ';'.join(job_args)
         cmd = 'ExocortexAlembic.createExportJobs(@"filename={0};{1}")'.format(
-            filePath, argsString)
+            file_path, argsString)
 
         MaxPlus.Core.EvalMAXScript(cmd)
 
@@ -67,9 +67,9 @@ class ExtractSceneAlembic(pyblish.api.InstancePlugin):
             self.log.warning('Exocortex plugin not available')
             return
 
-        ticks = MaxPlus.Core.EvalMAXScript('ticksperframe').GetInt()
-        current_start_frame =  MaxPlus.Animation.GetAnimRange().Start() / ticks
-        current_end_frame =  MaxPlus.Animation.GetAnimRange().End() / ticks
+        ticks_per_frame = MaxPlus.Core.EvalMAXScript('ticksperframe').GetInt()
+        current_start_frame =  MaxPlus.Animation.GetAnimRange().Start() / ticks_per_frame
+        current_end_frame =  MaxPlus.Animation.GetAnimRange().End() / ticks_per_frame
 
         # Extract options.
         context_options = instance.context.data['options'].get(
@@ -88,7 +88,7 @@ class ExtractSceneAlembic(pyblish.api.InstancePlugin):
         )
 
         self.exocortexExportAlembic(
-            filePath=temporary_path,
+            file_path=temporary_path,
             options={
                 'alembicNormalsWrite' : normals_write,
                 'alembicUVWrite' : uv_write,

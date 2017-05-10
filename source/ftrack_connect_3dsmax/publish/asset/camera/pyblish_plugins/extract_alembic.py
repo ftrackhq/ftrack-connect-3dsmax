@@ -52,16 +52,16 @@ class ExtractCameraAlembic(pyblish.api.InstancePlugin):
 
         if  context_options.get('include_animation', False):
             ticks_per_frame = MaxPlus.Core.EvalMAXScript('ticksperframe').GetInt()
-            current_start_frame =  MaxPlus.Animation.GetAnimRange().Start() / ticks
-            current_end_frame =  MaxPlus.Animation.GetAnimRange().End() / ticks
+            current_start_frame =  MaxPlus.Animation.GetAnimRange().Start() / ticks_per_frame
+            current_end_frame =  MaxPlus.Animation.GetAnimRange().End() / ticks_per_frame
             sampling = context_options.get('sampling', 1.0)
 
-            jobArgs.append('in={0}'.format(context_options.get('start_frame', current_start_frame))
-            jobArgs.append('out={0}'.format(context_options.get('end_frame', current_end_frame))
-            jobArgs.append('subStep={0}'.format(int(math.ceil(sampling))))
+            job_args.append('in={0}'.format(context_options.get('start_frame', current_start_frame)))
+            job_args.append('out={0}'.format(context_options.get('end_frame', current_end_frame)))
+            job_args.append('subStep={0}'.format(int(math.ceil(sampling))))
         else:
-            jobArgs.append('in=0')
-            jobArgs.append('out=0')
+            job_args.append('in=0')
+            job_args.append('out=0')
 
         # Export the alembic file.
         temporary_path = os.path.join(
