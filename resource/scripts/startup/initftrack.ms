@@ -3,29 +3,23 @@
 -- Load the FtrackAssetHelperPlugin
 include "ftrackassethelper.ms"
 
--- Return true if this version of 3ds Max is supported.
-fn ftrackCheckMaxVersion = (
+-- Initialize ftrack if the 3ds Max version is supported.
+fn initFtrack = (
     local versionString = getFileVersion "$max/3dsmax.exe"
     local versionTokens = (filterString versionString ",")
     local majorVersion = versionTokens[1] as integer
     local servicePack = versionTokens[2] as integer
 
-    if majorVersion < 18
-        -- We don't support 2015 and earlier.
-        then return false
-    else if majorVersion == 18 and servicePack < 7
-        -- We don't support 2016 versions before SP3.
-        -- For some strange reason, SP3 is 7 in the version string.
-        then return false
-
-    return true
+    if majorVersion < 18 or (majorVersion == 18 and servicePack < 7) then (
+        messageBox "This version of 3ds Max is not supported.\nPlease use 3ds Max 2016 SP3 or newer." title: "Ftrack connect 3ds Max"
+    )
+    else if majorVersion == 18 then ( -- 2016 SP3+.
+        python.ExecuteFile("initftrack_legacy.py");
+    )
+    else ( -- 2017 and newer.
+        python.ExecuteFile("initftrack_publish.py");
+        python.ExecuteFile("initftrack_legacy.py");
+    )
 )
 
--- Initialize ftrack if the 3ds Max version is supported.
-if ftrackCheckMaxVersion()
-    then (
-        python.ExecuteFile("initftrack_legacy.py");
-        python.ExecuteFile("initftrack_publish.py");
-    )
-else
-    messageBox "This version of 3ds Max is not supported.\nPlease use 3ds Max 2016 SP3 or newer." title: "Ftrack connect 3ds Max"
+initFtrack()
