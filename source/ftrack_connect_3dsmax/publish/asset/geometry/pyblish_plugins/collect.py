@@ -17,6 +17,7 @@ class CollectGeometries(pyblish.api.ContextPlugin):
     BONE_CLASS_ID               = (0x28bf6e8d, 0x2ecca840)
 
     def __contains_geom_as_children(self, node):
+        '''Return true if a node or any of its children is a geometry.'''
         for n in node.Children:
             if self.__contains_geom_as_children(n):
                 return True

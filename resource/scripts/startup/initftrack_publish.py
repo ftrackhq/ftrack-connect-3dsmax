@@ -87,6 +87,7 @@ def __createDialogAction(actionName, callback):
 
 
 def get_max_plugin():
+    '''Return the max publish plugin.'''
     global max_plugin
     if not max_plugin:
         plugin = ftrack_connect_3dsmax.publish.plugin.MaxPlugin(
@@ -109,6 +110,7 @@ def showPublishAssetDialog():
 
 
 def showGlobalContextSwitch():
+    '''Create the context dialog if it does not exist and show it.'''
     global changeContextDialog
 
     if not changeContextDialog:
@@ -133,6 +135,10 @@ def initFtrack():
     ftrackMenuBuilder.create()
 
     # Send usage event.
+    # Currently commented because we already send the event when initializing
+    # the legacy integration.
+    # todo: uncomment when the legacy integration is removed.
+
     # from ftrack_connect_3dsmax.connector import usage
     # usage.send_event('USED-FTRACK-CONNECT-3DS-MAX')
 

@@ -15,6 +15,7 @@ class ExtractCameraMaxBinary(pyblish.api.InstancePlugin):
     match = pyblish.api.Subset
 
     def deselect_all(self):
+        '''Deselect all nodes.'''
         import MaxPlus
         MaxPlus.SelectionManager.ClearNodeSelection()
 

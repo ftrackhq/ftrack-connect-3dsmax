@@ -15,10 +15,12 @@ class ExtractLightRigMaxBinary(pyblish.api.InstancePlugin):
     match = pyblish.api.Subset
 
     def deselect_all(self):
+        '''Deselect all nodes.'''
         import MaxPlus
         MaxPlus.SelectionManager.ClearNodeSelection()
 
     def select_hierarchy(self, node):
+        '''Select a node and all of its children.'''
         import MaxPlus
         MaxPlus.SelectionManager.SelectNode(node, False)
         for c in node.Children:

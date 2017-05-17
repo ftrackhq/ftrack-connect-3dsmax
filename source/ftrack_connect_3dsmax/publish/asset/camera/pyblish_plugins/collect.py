@@ -9,9 +9,11 @@ class CollectCameras(pyblish.api.ContextPlugin):
 
     order = pyblish.api.CollectorOrder
 
+    # From Max's SDK headers.
     MAX_CAMERA_CLASS_ID = 32
 
-    def __create_camera_instances(self, node, context, selection):
+    def create_camera_instances(self, node, context, selection):
+        '''Create a max camera instance if node is a camera and recurse.'''
         if node.Object.SuperClassID == self.MAX_CAMERA_CLASS_ID:
             name = node.GetName()
             instance = context.create_instance(
@@ -28,7 +30,7 @@ class CollectCameras(pyblish.api.ContextPlugin):
             )
 
         for c in node.Children:
-            self.__create_camera_instances(c, context, selection)
+            self.create_camera_instances(c, context, selection)
 
     def process(self, context):
         '''Process *context* and add max camera instances.'''
@@ -43,4 +45,4 @@ class CollectCameras(pyblish.api.ContextPlugin):
 
         root = MaxPlus.Core.GetRootNode()
         for c in root.Children:
-            self.__create_camera_instances(c, context, selection)
+            self.create_camera_instances(c, context, selection)

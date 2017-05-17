@@ -13,6 +13,7 @@ class CollectLightRigs(pyblish.api.ContextPlugin):
     LIGHT_SUPERCLASS_ID = 0x0030
 
     def __contains_lights_as_children(self, node):
+        '''Return true if a node or any of its children is a light.'''
         for n in node.Children:
             if self.__contains_lights_as_children(n):
                 return True

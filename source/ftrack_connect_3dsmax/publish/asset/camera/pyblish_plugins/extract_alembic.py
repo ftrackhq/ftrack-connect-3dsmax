@@ -15,7 +15,7 @@ class ExtractCameraAlembic(pyblish.api.InstancePlugin):
     families = ['ftrack', 'camera']
     match = pyblish.api.Subset
 
-    def exocortexAlembicAvailable(self):
+    def exocortex_alembic_available(self):
         '''Check if Exocortex Crate Alembic plugin is available.
         Currently, we check if the AlembicCameraProperties modifier exists.
         '''
@@ -25,12 +25,17 @@ class ExtractCameraAlembic(pyblish.api.InstancePlugin):
         ).Get()
 
     def deselect_all(self):
+        '''Deselect all nodes.'''
         import MaxPlus
         MaxPlus.SelectionManager.ClearNodeSelection()
 
     def process(self, instance):
         '''Process instance.'''
         import MaxPlus
+
+        if not self.exocortex_alembic_available():
+            self.log.warning('Exocortex plugin not available')
+            return
 
         # Save and clear the selection, select our camera.
         saved_selection = MaxPlus.SelectionManager.GetNodes()

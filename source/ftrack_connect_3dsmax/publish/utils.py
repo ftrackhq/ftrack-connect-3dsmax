@@ -23,6 +23,7 @@ def getUniqueNodeName(nodeName):
     return uniqueNodeName
 
 def getTimeRange():
+    '''Return the time range of the current scene.'''
     start = evalMAXScript('animationRange.start')
     end = evalMAXScript('animationRange.end')
     return (start, end)
@@ -33,15 +34,19 @@ def mergeMaxFile(filePath):
         'mergemaxfile @"{0}" #autoRenameDups #neverReparent #select'.format(filePath))
 
 def selectAll():
+    '''Select all objects.'''
     evalMAXScript('select $*')
 
 def deselectAll():
+    '''Deselect all nodes.'''
     MaxPlus.SelectionManager.ClearNodeSelection()
 
 def saveSelection():
+    '''Return a list of all selected nodes.'''
     return MaxPlus.SelectionManager.GetNodes()
 
 def restoreSelection(savedSelection):
+    '''Restore a saved selection.'''
     MaxPlus.SelectionManager.SelectNodes(savedSelection)
 
 def addNodeToSelection(node):
@@ -49,9 +54,11 @@ def addNodeToSelection(node):
     MaxPlus.SelectionManager.SelectNode(node, False)
 
 def selectionEmpty():
+    '''Return true is no nodes are Selected.'''
     return MaxPlus.SelectionManager.GetNodes().GetCount() == 0
 
 def selectOnlyCameras():
+    '''Remove from the current selection nodes that are not cameras.'''
     cmd ='''
     selectedCameras = #()
     for obj in selection do (
@@ -69,6 +76,7 @@ def createSelectionSet(setName):
     evalMAXScript('selectionSets["{0}"] = selection'.format(setName))
 
 def _collectChildrenNodes(n, nodes):
+    '''Add the children of a node to the nodes list.'''
     for c in n.Children:
         collectChildrenNodes(c, nodes)
 

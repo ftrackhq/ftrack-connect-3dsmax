@@ -14,7 +14,7 @@ class ExtractGeometryAlembic(pyblish.api.InstancePlugin):
     families = ['ftrack', 'geometry']
     match = pyblish.api.Subset
 
-    def exocortexAlembicAvailable(self):
+    def exocortex_alembic_available(self):
         '''Check if Exocortex Crate Alembic plugin is available.
         Currently, we check if the AlembicCameraProperties modifier exists.
         '''
@@ -23,7 +23,7 @@ class ExtractGeometryAlembic(pyblish.api.InstancePlugin):
             'findItem modifier.classes AlembicCameraProperties != 0'
         ).Get()
 
-    def exocortexExportAlembic(self, file_path, options):
+    def exocortex_export_alembic(self, file_path, options):
         '''Export an Alembic archive.'''
         import MaxPlus
 
@@ -60,10 +60,12 @@ class ExtractGeometryAlembic(pyblish.api.InstancePlugin):
         MaxPlus.Core.EvalMAXScript(cmd)
 
     def deselect_all(self):
+        '''Deselect all nodes.'''
         import MaxPlus
         MaxPlus.SelectionManager.ClearNodeSelection()
 
     def select_hierarchy(self, node):
+        '''Select a node and all its children.'''
         import MaxPlus
         MaxPlus.SelectionManager.SelectNode(node, False)
         for c in node.Children:
@@ -73,7 +75,7 @@ class ExtractGeometryAlembic(pyblish.api.InstancePlugin):
         '''Process instance.'''
         import MaxPlus
 
-        if not self.exocortexAlembicAvailable():
+        if not self.exocortex_alembic_available():
             self.log.warning('Exocortex plugin not available')
             return
 
@@ -113,7 +115,7 @@ class ExtractGeometryAlembic(pyblish.api.InstancePlugin):
             MaxPlus.PathManager.GetTempDir(), uuid.uuid4().hex + '.abc'
         )
 
-        self.exocortexExportAlembic(
+        self.exocortex_export_alembic(
             file_path=temporary_path,
             options={
                 'alembicNormalsWrite': normals_write,

@@ -14,7 +14,7 @@ class ExtractSceneAlembic(pyblish.api.InstancePlugin):
     families = ['ftrack', 'scene']
     match = pyblish.api.Subset
 
-    def exocortexAlembicAvailable(self):
+    def exocortex_alembic_available(self):
         '''Check if Exocortex Crate Alembic plugin is available.
         Currently, we check if the AlembicCameraProperties modifier exists.
         '''
@@ -23,7 +23,7 @@ class ExtractSceneAlembic(pyblish.api.InstancePlugin):
             'findItem modifier.classes AlembicCameraProperties != 0'
         ).Get()
 
-    def exocortexExportAlembic(self, file_path, options):
+    def exocortex_export_alembic(self, file_path, options):
         '''Export an Alembic archive.'''
         import MaxPlus
 
@@ -63,7 +63,7 @@ class ExtractSceneAlembic(pyblish.api.InstancePlugin):
         '''Process instance.'''
         import MaxPlus
 
-        if not self.exocortexAlembicAvailable():
+        if not self.exocortex_alembic_available():
             self.log.warning('Exocortex plugin not available')
             return
 
@@ -87,7 +87,7 @@ class ExtractSceneAlembic(pyblish.api.InstancePlugin):
             MaxPlus.PathManager.GetTempDir(), uuid.uuid4().hex + '.abc'
         )
 
-        self.exocortexExportAlembic(
+        self.exocortex_export_alembic(
             file_path=temporary_path,
             options={
                 'alembicNormalsWrite' : normals_write,
