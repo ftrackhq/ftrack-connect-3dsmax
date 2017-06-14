@@ -7,6 +7,13 @@
 Release Notes
 *************
 
+.. release:: Upcoming
+
+    .. change:: new
+        :tags: Publish
+
+        New asset publisher for Max 2017 and later.
+
 .. release:: 0.2.11
     :date: 2016-12-01
 

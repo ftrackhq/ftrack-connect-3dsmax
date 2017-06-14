@@ -1,16 +1,18 @@
-# :copyright: Copyright (c) 2016 ftrack
+# :copyright: Copyright (c) 2017 ftrack
 
 import functools
-
-import MaxPlus
-import ftrack
 import os
+
+import ftrack
 from PySide import QtCore
 
-import ftrack_connect_3dsmax.publish.plugin
+import MaxPlus
+
 import ftrack_connect_pipeline
 import ftrack_connect_pipeline.publish
 import ftrack_connect_pipeline.global_context_switch
+
+import ftrack_connect_3dsmax.publish.plugin
 
 try:
     ftrack.setup()

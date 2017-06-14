@@ -100,6 +100,8 @@ class GenericAsset(FTAssetType):
         ftrackHelperName = self._getUniqueFtrackAssetHelperName(iAObj)
         logger.debug(u'Ftrack helper obj name = {0}'.format(ftrackHelperName))
 
+        # For compatibility with assets published with legacy, check that the asset
+        # name ends with alembic.
         if iAObj.componentName.endswith('alembic'):
             if exocortexAlembicAvailable():
                 try:
@@ -249,6 +251,8 @@ class GenericAsset(FTAssetType):
         '''
         assetHelperNode = MaxPlus.INode.GetINodeByName(applicationObject)
 
+        # For compatibility with assets published with legacy, check that the asset
+        # name ends with alembic.
         if iAObj.componentName.endswith('alembic'):
             if exocortexAlembicAvailable():
                 deleteAllChildren(assetHelperNode)
