@@ -7,6 +7,12 @@
 Release Notes
 *************
 
+ .. release:: Upcoming
+
+    .. change:: new
+
+        Added Exocortex plugin build for Max 2018.
+
 .. release:: 0.2.11
     :date: 2016-12-01
 
