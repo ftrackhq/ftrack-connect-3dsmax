@@ -4,7 +4,6 @@
 import os
 import uuid
 
-from PySide import QtCore, QtGui
 import MaxPlus
 
 
@@ -53,9 +52,9 @@ class Connector(maincon.Connector):
         :param ptr: Pointer to QObject in memory
         :type ptr: long or Swig instance
         :param base: (Optional) Base class to wrap with (Defaults to QObject, which should handle anything)
-        :type base: QtGui.QWidget
+        :type base: QtWidgets.QWidget
         :return: QWidget or subclass instance
-        :rtype: QtGui.QWidget
+        :rtype: QtWidgets.QWidget
         '''
         return ptr
 

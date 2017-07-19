@@ -1,7 +1,7 @@
 # :coding: utf-8
 # :copyright: Copyright (c) 2016 ftrack
 
-from PySide import QtGui, QtCore
+from QtExt import QtCore, QtGui, QtWidgets
 
 from ftrack_connect.ui.widget.info import FtrackInfoDialog
 from ftrack_connect.ui.theme import applyTheme
@@ -15,8 +15,8 @@ class FtrackMaxInfoDialog(FtrackInfoDialog):
         )
 
         self.headerWidget.setSizePolicy(
-            QtGui.QSizePolicy.Expanding,
-            QtGui.QSizePolicy.Fixed
+            QtWidgets.QSizePolicy.Expanding,
+            QtWidgets.QSizePolicy.Fixed
         )
         applyTheme(self, 'integration')
 

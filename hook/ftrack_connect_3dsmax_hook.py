@@ -213,7 +213,7 @@ class ApplicationLauncher(ftrack_connect.application.ApplicationLauncher):
         pypath = environment['PYTHONPATH'].split(';')
         if pypath:
             import imp
-            modulesToRemove = ['PySide']
+            modulesToRemove = ['PySide', 'PySide2']
             pathsToRemove = []
             for m in modulesToRemove:
                 try:
