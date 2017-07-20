@@ -6,15 +6,9 @@ import sys
 import MaxPlus
 import ftrack
 import functools
-from PySide import QtCore, QtGui
-
-from ftrack_connect.ui.widget.import_asset import FtrackImportAssetDialog
-from ftrack_connect.ui.widget.asset_manager import FtrackAssetManagerDialog
+from QtExt import QtCore
 
 from ftrack_connect_3dsmax.connector import Connector
-from ftrack_connect_3dsmax.ui.info import FtrackMaxInfoDialog
-from ftrack_connect_3dsmax.ui.publisher import PublishAssetDialog
-from ftrack_connect_3dsmax.ui.tasks import FtrackTasksDialog
 
 from ftrack_connect_3dsmax.connector.maxcallbacks import *
 
@@ -114,6 +108,7 @@ def showImportAssetDialog():
     global importAssetDialog
 
     if not importAssetDialog:
+        from ftrack_connect.ui.widget.import_asset import FtrackImportAssetDialog
         importAssetDialog = __createAndInitFtrackDialog(FtrackImportAssetDialog)
 
     # Add some extra margins to the import asset dialog under 3ds Max 2017.
@@ -127,6 +122,7 @@ def showPublishAssetDialog():
     global publishAssetDialog
 
     if not publishAssetDialog:
+        from ftrack_connect_3dsmax.ui.publisher import PublishAssetDialog
         publishAssetDialog = __createAndInitFtrackDialog(functools.partial(
             PublishAssetDialog, currentEntity=currentEntity))
 
@@ -141,6 +137,7 @@ def showAssetManagerDialog():
     global assetManagerDialog
 
     if not assetManagerDialog:
+        from ftrack_connect.ui.widget.asset_manager import FtrackAssetManagerDialog
         assetManagerDialog = __createAndInitFtrackDialog(FtrackAssetManagerDialog)
 
         # Make some columns of the asset manager dialog wider to compensate
@@ -158,6 +155,7 @@ def showInfoDialog():
     global infoDialog
 
     if not infoDialog:
+        from ftrack_connect_3dsmax.ui.info import FtrackMaxInfoDialog
         infoDialog = __createAndInitFtrackDialog(FtrackMaxInfoDialog)
 
     infoDialog.show()
@@ -167,6 +165,7 @@ def showTasksDialog():
     global tasksDialog
 
     if not tasksDialog:
+        from ftrack_connect_3dsmax.ui.tasks import FtrackTasksDialog
         tasksDialog = __createAndInitFtrackDialog(FtrackTasksDialog)
 
     tasksDialog.show()
