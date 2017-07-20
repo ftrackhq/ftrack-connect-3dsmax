@@ -1,18 +1,19 @@
 # :copyright: Copyright (c) 2016 ftrack
 
 import os
-import sys
 
 import MaxPlus
-import ftrack
 import functools
 from QtExt import QtCore
 
 from ftrack_connect_3dsmax.connector import Connector
-
 from ftrack_connect_3dsmax.connector.maxcallbacks import *
 
-ftrack.setup()
+try:
+    import ftrack
+    ftrack.setup()
+except:
+    pass
 
 class FtrackMenuBuilder(object):
     '''Build the Ftrack menu.'''
@@ -58,7 +59,7 @@ class DisableMaxAcceleratorsEventFilter(QtCore.QObject):
 
         return False
 
-connector = Connector()
+connector = None
 ftrackMenuBuilder = None
 
 currentEntity = ftrack.Task(
@@ -170,9 +171,10 @@ def showTasksDialog():
 
     tasksDialog.show()
 
-
 def initFtrack():
     '''Initialize Ftrack, register assets and build the Ftrack menu.'''
+    global connector
+    connector = Connector()
     connector.registerAssets()
 
     global ftrackMenuBuilder
