@@ -73,10 +73,15 @@ assetManagerDialog = None
 infoDialog = None
 tasksDialog = None
 
-def __isMax2017():
-    '''Return True if the 3ds Max version is 2017'''
+
+def __adjustDialogLayoutMargins(dialog):
+    '''Add extra spacing to a dialog main layout in Max 2017 and newer.'''
+    # Get the Max version.
     vers = MaxPlus.Core.EvalMAXScript('getFileVersion "$max/3dsmax.exe"').Get()
-    return vers.startswith('19')
+
+    # Add an extra 5 pixels margin for Max 2017 or newer.
+    if not vers.startswith('18'):
+        dialog.mainLayout.setContentsMargins(5, 5, 5, 5)
 
 def __createAndInitFtrackDialog(Dialog):
     '''Create an instance of a dialog and initialize it for use in 3ds Max'''
@@ -111,10 +116,7 @@ def showImportAssetDialog():
     if not importAssetDialog:
         from ftrack_connect.ui.widget.import_asset import FtrackImportAssetDialog
         importAssetDialog = __createAndInitFtrackDialog(FtrackImportAssetDialog)
-
-    # Add some extra margins to the import asset dialog under 3ds Max 2017.
-    if __isMax2017():
-        importAssetDialog.mainLayout.setContentsMargins(5, 5, 5, 5)
+        __adjustDialogLayoutMargins(importAssetDialog)
 
     importAssetDialog.show()
 
@@ -126,10 +128,7 @@ def showPublishAssetDialog():
         from ftrack_connect_3dsmax.ui.publisher import PublishAssetDialog
         publishAssetDialog = __createAndInitFtrackDialog(functools.partial(
             PublishAssetDialog, currentEntity=currentEntity))
-
-    # Add some extra margins to the import asset dialog under 3ds Max 2017.
-    if __isMax2017():
-        publishAssetDialog.mainLayout.setContentsMargins(5, 5, 5, 5)
+        __adjustDialogLayoutMargins(publishAssetDialog)
 
     publishAssetDialog.show()
 
