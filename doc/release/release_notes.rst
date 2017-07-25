@@ -7,6 +7,12 @@
 Release Notes
 *************
 
+.. release:: upcoming
+
+    .. change:: new
+
+        Added Max 2018 compatibility.
+
 .. release:: 0.2.11
     :date: 2016-12-01
 
