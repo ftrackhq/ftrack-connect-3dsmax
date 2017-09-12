@@ -21,14 +21,6 @@ Release Notes
 
         Scanning for new asset versions at scene startup is very slow.
 
-.. release:: 0.2.11
-    :date: 2016-12-01
-
-    .. change:: fixed
-        :tags: Performance
-
-        Scanning for new asset versions at scene startup is very slow.
-
 .. release:: 0.2.10
     :date: 2016-09-23
 
