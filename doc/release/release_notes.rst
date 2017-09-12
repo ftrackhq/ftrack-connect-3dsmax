@@ -7,6 +7,12 @@
 Release Notes
 *************
 
+ .. release:: Upcoming
+
+    .. change:: fixed
+
+        Fixed Max 2016 hang when starting from ftrack connect.
+
 .. release:: 0.2.11
     :date: 2016-12-01
 
