@@ -6,6 +6,7 @@ import uuid
 
 import MaxPlus
 
+import ftrack_api
 
 from ftrack_connect.connector import base as maincon
 from ftrack_connect.connector import FTAssetHandlerInstance
@@ -18,7 +19,11 @@ from .xrefs import deleteSceneXRef
 
 class Connector(maincon.Connector):
     def __init__(self):
-        super(Connector, self).__init__()
+        # We need to create our own session and call manually event_hub.connect()
+        # on the main thread to avoid Max 2016 hanging.
+        session = ftrack_api.Session(auto_connect_event_hub=False)
+        session.event_hub.connect()
+        super(Connector, self).__init__(session=session)
 
     @staticmethod
     def getAssets():
