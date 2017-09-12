@@ -7,7 +7,11 @@
 Release Notes
 *************
 
- .. release:: Upcoming
+.. release:: upcoming
+
+    .. change:: new
+
+        Added Max 2018 compatibility.
 
     .. change:: fixed
 
