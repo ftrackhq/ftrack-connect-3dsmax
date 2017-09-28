@@ -11,7 +11,18 @@ Release Notes
 
     .. change:: new
 
-        Added Exocortex plugin build for Max 2018.
+        Added Exocortex plugin build for Max 2018
+
+.. release:: 0.3.0
+    :date: 2017-09-12
+
+    .. change:: new
+
+        Added Max 2018 compatibility.
+
+    .. change:: fixed
+
+        Fixed Max 2016 hang when starting from ftrack connect.
 
 .. release:: 0.2.11
     :date: 2016-12-01

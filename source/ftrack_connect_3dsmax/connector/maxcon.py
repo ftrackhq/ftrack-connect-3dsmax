@@ -4,9 +4,9 @@
 import os
 import uuid
 
-from PySide import QtCore, QtGui
 import MaxPlus
 
+import ftrack_api
 
 from ftrack_connect.connector import base as maincon
 from ftrack_connect.connector import FTAssetHandlerInstance
@@ -19,7 +19,11 @@ from .xrefs import deleteSceneXRef
 
 class Connector(maincon.Connector):
     def __init__(self):
-        super(Connector, self).__init__()
+        # We need to create our own session and call manually event_hub.connect()
+        # on the main thread to avoid Max 2016 hanging.
+        session = ftrack_api.Session(auto_connect_event_hub=False)
+        session.event_hub.connect()
+        super(Connector, self).__init__(session=session)
 
     @staticmethod
     def getAssets():
@@ -53,9 +57,9 @@ class Connector(maincon.Connector):
         :param ptr: Pointer to QObject in memory
         :type ptr: long or Swig instance
         :param base: (Optional) Base class to wrap with (Defaults to QObject, which should handle anything)
-        :type base: QtGui.QWidget
+        :type base: QtWidgets.QWidget
         :return: QWidget or subclass instance
-        :rtype: QtGui.QWidget
+        :rtype: QtWidgets.QWidget
         '''
         return ptr
 

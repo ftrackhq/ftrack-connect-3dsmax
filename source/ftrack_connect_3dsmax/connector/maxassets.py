@@ -84,8 +84,8 @@ class GenericAsset(FTAssetType):
         # a very generic error message in the publish dialog and
         # the user has to check in the script editor to find the real error.
         # For now, we use a message box to tell the user what was wrong.
-        from PySide import QtGui
-        QtGui.QMessageBox.critical(None, "Error", msg)
+        from QtExt import QtWidgets
+        QtWidgets.QMessageBox.critical(None, "Error", msg)
         raise RuntimeError(msg)
 
     def importAsset(self, iAObj=None):
