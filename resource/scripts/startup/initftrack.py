@@ -1,6 +1,10 @@
 # :copyright: Copyright (c) 2016 ftrack
 
 import os
+import sys
+
+sys.stdout = _old_stdout
+sys.stderr = _old_stderr
 
 import MaxPlus
 import functools
