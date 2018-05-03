@@ -7,6 +7,12 @@
 Release Notes
 *************
 
+.. release:: Upcoming
+
+    .. change:: fixed
+
+        3DSMax < 2017 hangs during publish. 
+
 .. release:: 0.3.0
     :date: 2017-09-12
 

@@ -3,17 +3,34 @@
 import os
 
 import MaxPlus
+import sys
+
+# Discover 3dsmax version.
+raw_max_version = MaxPlus.FPValue()
+MaxPlus.Core.EvalMAXScript(
+    'getFileVersion "$max/3dsmax.exe"', raw_max_version
+)
+max_version = int(raw_max_version.Get().split(',')[0])
+
+if max_version < 19:
+    # Max 2015 & 2016 require this patch to avoid crashing during print and logging.
+    # https://help.autodesk.com/view/3DSMAX/2016/ENU/?guid=__files_GUID_B3FF3632_F177_4A90_AE3D_D36603B7A2F3_htm
+    sys.stdout = _old_stdout
+    sys.stderr = _old_stderr
+
 import functools
 from QtExt import QtCore
 
 from ftrack_connect_3dsmax.connector import Connector
 from ftrack_connect_3dsmax.connector.maxcallbacks import *
 
+
 try:
     import ftrack
     ftrack.setup()
 except:
     pass
+
 
 class FtrackMenuBuilder(object):
     '''Build the Ftrack menu.'''
