@@ -9,6 +9,7 @@ import re
 
 import ftrack
 import ftrack_connect.application
+from ftrack_connect.session import get_shared_session
 
 maxStartupDir = os.path.abspath(
     os.path.join(
@@ -17,6 +18,9 @@ maxStartupDir = os.path.abspath(
     )
 )
 maxStartupScript = os.path.join(maxStartupDir, 'initftrack.ms')
+
+
+session = get_shared_session()
 
 
 class LaunchAction(object):
@@ -69,15 +73,23 @@ class LaunchAction(object):
         '''Return true if the selection is valid.'''
         if (
             len(selection) != 1 or
-            selection[0]['entityType'] != 'task'
+            selection[0]['entityType'] not in ['task', 'Component']
         ):
             return False
 
-        entity = selection[0]
-        task = ftrack.Task(entity['entityId'])
 
-        if task.getObjectType() != 'Task':
+        ftrack_entity = None
+        entity = selection[0]
+
+        if entity['entityType'] == 'task':
+            ftrack_entity = session.get('Task', entity['entityId'])
+
+        elif entity['entityType'] == 'Component':
+            ftrack_entity = session.get('Component', entity['entityId'])
+
+        if ftrack_entity and ftrack_entity.entity_type not in ['Task', 'FileComponent']:
             return False
+
 
         return True
 
@@ -191,24 +203,36 @@ class ApplicationLauncher(ftrack_connect.application.ApplicationLauncher):
             environment
         )
 
-        entity = context['selection']
-        if entity:
-            entity = entity[0]
-            task = ftrack.Task(entity['entityId'])
-            taskParent = task.getParent()
+        entity = context['selection'][0]
+        if entity['entityType'] != 'Component':
 
-            try:
-                environment['FS'] = str(int(taskParent.getFrameStart()))
-            except Exception:
-                environment['FS'] = '1'
+            task = session.get(
+                'Task', entity['entityId']
+            )
 
-            try:
-                environment['FE'] = str(int(taskParent.getFrameEnd()))
-            except Exception:
-                environment['FE'] = '1'
+        else:
+            component = session.get(
+                'Component', entity['entityId']
+            )
+            self.logger.info(component['version'].items())
+            task = component['version']['asset']['parent']
 
-            environment['FTRACK_TASKID'] = task.getId()
-            environment['FTRACK_SHOTID'] = task.get('parent_id')
+        task_parent = task['parent']
+        task_parent_attributes = task_parent['custom_attributes']
+
+        try:
+            environment['FS'] = str(int(task_parent_attributes['fstart']))
+        except Exception:
+            environment['FS'] = '1'
+
+        try:
+            environment['FE'] = str(int(task_parent_attributes['fend']))
+        except Exception:
+            environment['FE'] = '1'
+
+        environment['FTRACK_TASKID'] = task['id']
+        environment['FTRACK_SHOTID'] = task_parent['id']
+
 
         pypath = environment['PYTHONPATH'].split(';')
         if pypath:

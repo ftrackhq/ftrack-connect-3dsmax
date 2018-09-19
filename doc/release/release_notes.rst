@@ -7,6 +7,13 @@
 Release Notes
 *************
 
+.. release:: Upcoming
+
+    .. change:: changed
+        :tags: launcher
+
+        3dsmax is discovered on components as well as tasks.
+
 .. release:: 0.3.1
     :date: 2018-05-03
 
