@@ -20,8 +20,6 @@ maxStartupDir = os.path.abspath(
 maxStartupScript = os.path.join(maxStartupDir, 'initftrack.ms')
 
 
-session = get_shared_session()
-
 
 class LaunchAction(object):
     '''ftrack connect 3ds Max discover and launch action.'''
@@ -46,6 +44,7 @@ class LaunchAction(object):
 
         self.applicationStore = applicationStore
         self.launcher = launcher
+        self.session = launcher.session
 
     def register(self):
         '''Override register to filter discover actions on logged in user.'''
@@ -82,10 +81,10 @@ class LaunchAction(object):
         entity = selection[0]
 
         if entity['entityType'] == 'task':
-            ftrack_entity = session.get('Task', entity['entityId'])
+            ftrack_entity = self.session.get('Task', entity['entityId'])
 
         elif entity['entityType'] == 'Component':
-            ftrack_entity = session.get('Component', entity['entityId'])
+            ftrack_entity = self.session.get('Component', entity['entityId'])
 
         if ftrack_entity and ftrack_entity.entity_type not in ['Task', 'FileComponent']:
             return False
@@ -206,12 +205,12 @@ class ApplicationLauncher(ftrack_connect.application.ApplicationLauncher):
         entity = context['selection'][0]
         if entity['entityType'] != 'Component':
 
-            task = session.get(
+            task = self.session.get(
                 'Task', entity['entityId']
             )
 
         else:
-            component = session.get(
+            component = self.session.get(
                 'Component', entity['entityId']
             )
             self.logger.info(component['version'].items())
