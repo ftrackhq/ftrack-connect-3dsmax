@@ -86,9 +86,11 @@ class LaunchAction(object):
         elif entity['entityType'] == 'Component':
             ftrack_entity = self.session.get('Component', entity['entityId'])
 
-        if ftrack_entity and ftrack_entity.entity_type not in ['Task', 'FileComponent']:
+        if not ftrack_entity:
             return False
 
+        if ftrack_entity and ftrack_entity.entity_type not in ['Task', 'FileComponent']:
+            return False
 
         return True
 
