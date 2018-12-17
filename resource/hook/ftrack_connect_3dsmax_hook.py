@@ -10,13 +10,13 @@ import re
 import ftrack
 import ftrack_connect.application
 
-maxStartupDir = os.path.abspath(
-    os.path.join(
-        os.path.dirname(__file__), '..', 'ftrack_connect_3dsmax', 'scripts',
-        'startup'
-    )
-)
+cwd = os.path.dirname(__file__)
+sources = os.path.abspath(os.path.join(cwd, '..', 'dependencies'))
+ftrack_connect_3dsmax_resource_path = os.path.abspath(os.path.join(cwd, '..',  'resource'))
+maxStartupDir = os.path.abspath(os.path.join(ftrack_connect_3dsmax_resource_path, 'scripts', 'startup'))
 maxStartupScript = os.path.join(maxStartupDir, 'initftrack.ms')
+sys.path.append(sources)
+
 
 
 class LaunchAction(object):
@@ -227,6 +227,12 @@ class ApplicationLauncher(ftrack_connect.application.ApplicationLauncher):
                     pypath.pop(i)
 
         environment['PYTHONPATH'] = ';'.join(pypath)
+
+        environment = ftrack_connect.application.appendPath(
+            sources,
+            'PYTHONPATH',
+            environment
+        )
 
         return environment
 
