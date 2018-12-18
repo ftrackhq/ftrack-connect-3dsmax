@@ -139,8 +139,7 @@ setup(
         'lowdown >= 0.1.0, < 1'
     ],
     install_requires=[
-        'appdirs',
-        'backports.functools_lru_cache'
+        'appdirs'
     ],
     tests_require=[
         'pytest >= 2.3.5, < 3'
