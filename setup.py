@@ -3,32 +3,46 @@
 
 import os
 import re
-import glob
+import shutil
 
-from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
+from setuptools import setup, find_packages, Command
 
+from pip._internal import main as pip_main
 
-ROOT_PATH = os.path.dirname(
-    os.path.realpath(__file__)
-)
+# Define paths
 
-RESOURCE_PATH = os.path.join(
-    ROOT_PATH, 'resource'
-)
+PLUGIN_NAME = 'ftrack-connect-3dsmax-{0}'
 
-SOURCE_PATH = os.path.join(
-    ROOT_PATH, 'source'
-)
+ROOT_PATH = os.path.dirname(os.path.realpath(__file__))
+
+RESOURCE_PATH = os.path.join(ROOT_PATH, 'resource')
+
+SOURCE_PATH = os.path.join(ROOT_PATH, 'source')
 
 README_PATH = os.path.join(ROOT_PATH, 'README.rst')
 
+BUILD_PATH = os.path.join(ROOT_PATH, 'build')
+
+STAGING_PATH = os.path.join(BUILD_PATH, PLUGIN_NAME)
+
+EXOCORTEX_PLUGIN_PATH = os.path.join(RESOURCE_PATH, 'ExocortexCrate')
+
+MAX_SCRIPTS_PATH = os.path.join(RESOURCE_PATH, 'scripts')
+
+HOOK_PATH = os.path.join(RESOURCE_PATH, 'hook')
+
+# Parse package version
 with open(os.path.join(
     SOURCE_PATH, 'ftrack_connect_3dsmax', '_version.py')
 ) as _version_file:
     VERSION = re.match(
         r'.*__version__ = \'(.*?)\'', _version_file.read(), re.DOTALL
     ).group(1)
+
+
+# Update staging path with the plugin version
+STAGING_PATH = STAGING_PATH.format(VERSION)
 
 
 # Custom commands.
@@ -47,44 +61,62 @@ class PyTest(TestCommand):
         raise SystemExit(errno)
 
 
-def get_files_from_folder(folder):
-    '''Get all files in a folder in resource folder.'''
-    plugin_directory = os.path.join(RESOURCE_PATH, folder)
-    plugin_data_files = []
+class BuildPlugin(Command):
+    '''Build plugin.'''
 
-    for root, directories, files in os.walk(plugin_directory):
-        files_list = []
-        if files:
-            for filename in files:
-                files_list.append(
-                    os.path.join(root, filename)
-                )
+    description = 'Download dependencies and build plugin .'
 
-        if files_list:
-            destination_folder = root.replace(
-                RESOURCE_PATH, 'ftrack_connect_3dsmax/ftrack_connect_3dsmax'
-            )
-            plugin_data_files.append(
-                (destination_folder, files_list)
-            )
+    user_options = []
 
-    return plugin_data_files
+    def initialize_options(self):
+        pass
 
-data_files = []
+    def finalize_options(self):
+        pass
 
-for child in os.listdir(
-    RESOURCE_PATH
-):
-    if os.path.isdir(os.path.join(RESOURCE_PATH, child)) and child != 'hook':
-        data_files += get_files_from_folder(child)
+    def run(self):
+        '''Run the build step.'''
+        # Clean staging path
+        shutil.rmtree(STAGING_PATH, ignore_errors=True)
 
-data_files.append(
-    (
-        'ftrack_connect_3dsmax/hook',
-        glob.glob(os.path.join(ROOT_PATH, 'hook', '*.py'))
-    )
-)
+        # Copy scripts files
+        shutil.copytree(
+            MAX_SCRIPTS_PATH,
+            os.path.join(STAGING_PATH, 'resource', 'scripts')
+        )
 
+        # Copy plugin files
+        shutil.copytree(
+            EXOCORTEX_PLUGIN_PATH,
+            os.path.join(STAGING_PATH, 'resource', 'ExocortexCrate')
+        )
+
+        # Copy hook files
+        shutil.copytree(
+            HOOK_PATH,
+            os.path.join(STAGING_PATH, 'hook')
+        )
+
+        # Install local dependencies
+        pip_main(
+            [
+                'install',
+                '.',
+                '--target',
+                os.path.join(STAGING_PATH, 'dependencies'),
+                '--process-dependency-links'
+            ]
+        )
+
+        # Generate plugin zip
+        shutil.make_archive(
+            os.path.join(
+                BUILD_PATH,
+                PLUGIN_NAME.format(VERSION)
+            ),
+            'zip',
+            STAGING_PATH
+        )
 
 # Configuration.
 setup(
@@ -92,7 +124,7 @@ setup(
     version=VERSION,
     description='3ds Max integration with ftrack.',
     long_description=open(README_PATH).read(),
-    keywords='',
+    keywords='ftrack, connect, connector, 3dsmax, autodesk',
     url='https://bitbucket.org/ftrack/ftrack-connect-3dsmax',
     author='ftrack',
     author_email='support@ftrack.com',
@@ -107,12 +139,12 @@ setup(
         'lowdown >= 0.1.0, < 1'
     ],
     install_requires=[
+        'appdirs'
     ],
     tests_require=[
         'pytest >= 2.3.5, < 3'
     ],
     cmdclass={
-        'test': PyTest
-    },
-    data_files=data_files
-)
+        'test': PyTest,
+        'build_plugin': BuildPlugin
+    })

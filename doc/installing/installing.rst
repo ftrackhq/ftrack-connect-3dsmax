@@ -21,19 +21,6 @@ download it for your platform.
     :ref:`article <using/launching>` to launch 3ds Max with the ftrack
     integration.
 
-Installing with pip
-===================
-
-.. highlight:: bash
-
-Installation is simple with `pip <http://www.pip-installer.org/>`_::
-
-    pip install ftrack-connect-3dsmax
-
-.. note::
-
-    This project is not yet available on PyPi.
-
 Building from source
 ====================
 
@@ -47,11 +34,10 @@ cloning the public repository::
 Then you can build and install the package into your current Python
 site-packages folder::
 
-    python setup.py install
+    python setup.py build_plugin
 
-Alternatively, just build locally and manage yourself::
-
-    python setup.py build
+The result plugin will then be available under the build folder.
+Copy or symlink the result plugin folder in your FTRACK_CONNECT_PLUGIN_PATH.
 
 Building documentation from source
 ----------------------------------
