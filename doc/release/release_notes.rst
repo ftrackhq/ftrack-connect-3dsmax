@@ -13,6 +13,21 @@ Release Notes
 
         Added Exocortex plugin build for Max 2018
 
+.. release:: 0.4.0
+    :date: 2019-01-02
+
+    .. change:: changed
+        :tags: Internal
+
+        Convert code to standalone ftrack-connect plugin.
+
+.. release:: 0.3.1
+    :date: 2018-05-03
+
+    .. change:: fixed
+
+        3DSMax < 2017 hangs during publish. 
+
 .. release:: 0.3.0
     :date: 2017-09-12
 
