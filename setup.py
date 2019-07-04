@@ -139,12 +139,19 @@ setup(
         'lowdown >= 0.1.0, < 1'
     ],
     install_requires=[
-        'appdirs'
+        'appdirs',
+        'qtext',
+    ],
+    dependency_links=[
+        (
+            'git+https://bitbucket.org/ftrack/qtext/get/0.2.2.zip'
+            '#egg=QtExt-0.2.2'
+        )
     ],
     tests_require=[
         'pytest >= 2.3.5, < 3'
     ],
     cmdclass={
         'test': PyTest,
-        'build_plugin': BuildPlugin
+        'build_plugin': BuildPlugin,
     })

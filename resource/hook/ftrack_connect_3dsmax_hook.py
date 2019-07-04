@@ -228,7 +228,7 @@ class ApplicationLauncher(ftrack_connect.application.ApplicationLauncher):
 
         environment['PYTHONPATH'] = ';'.join(pypath)
 
-        environment = ftrack_connect.application.appendPath(
+        environment = ftrack_connect.application.prependPath(
             sources,
             'PYTHONPATH',
             environment
