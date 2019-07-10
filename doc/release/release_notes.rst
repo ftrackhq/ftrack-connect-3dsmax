@@ -7,7 +7,8 @@
 Release Notes
 *************
 
-.. release:: Upcoming
+.. release:: 0.4.2
+    :date: 2019-07-10
 
     .. change:: fix
 
