@@ -7,6 +7,19 @@
 Release Notes
 *************
 
+
+.. release:: Upcoming
+
+    .. change:: changed
+        :tags: Internal
+
+        Rename scene asset option from import to open to match behaviour.
+
+    .. change:: fix
+        :tags: Internal
+
+        Event signature error on PySide2.
+
 .. release:: 0.4.3
     :date: 2020-01-21
 
