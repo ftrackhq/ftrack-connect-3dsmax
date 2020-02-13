@@ -630,7 +630,30 @@ class SceneAsset(GenericAsset):
             importMode = iAObj.options['importMode'] if 'importMode' in iAObj.options else 'importMode'
             logger.debug(u'Import mode = {0}'.format(importMode))
 
-            if importMode == SCENE_XREF_IMPORT_MODE:
+            if importMode == IMPORT_OPEN_MODE:
+                with DisableOpenFileCallbacks() as d:
+                    MaxPlus.FileManager.Open(
+                        iAObj.filePath, True, True, True, False
+                    )
+
+                    logger.debug(u'Creating ftrack asset helper object')
+                    ftrackHelperName = self._getUniqueFtrackAssetHelperName(iAObj)
+                    logger.debug(u'Ftrack helper obj name = {0}'.format(ftrackHelperName))
+
+                    helperNode = createFtrackAssetHelper(
+                        ftrackHelperName,
+                        iAObj.assetVersionId,
+                        int(iAObj.assetVersion),
+                        iAObj.filePath,
+                        iAObj.componentName,
+                        iAObj.componentId,
+                        importMode)
+
+                    self._cleanupSelectionAndGroupUnderHelper(helperNode)
+                    deselectAll()
+                    checkForNewAssetsAndRefreshAssetManager()
+
+            elif importMode == SCENE_XREF_IMPORT_MODE:
                 super(SceneAsset, self).importAsset(iAObj)
             else:
                 # Temporary disable the file open callbacks.
@@ -677,6 +700,7 @@ class SceneAsset(GenericAsset):
                 <option type="radio" name="importMode">
                     <optionitem name="Import" value="True"/>
                     <optionitem name="Scene XRef"/>
+                    <optionitem name="Open"/>
                 </option>
             </row>
         </tab>
