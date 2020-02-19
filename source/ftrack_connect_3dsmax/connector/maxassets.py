@@ -632,7 +632,7 @@ class SceneAsset(GenericAsset):
 
             if importMode == SCENE_XREF_IMPORT_MODE:
                 super(SceneAsset, self).importAsset(iAObj)
-            else:
+            elif importMode == IMPORT_OPEN_MODE:
                 # Temporary disable the file open callbacks.
                 with DisableOpenFileCallbacks() as d:
                     MaxPlus.FileManager.Open(iAObj.filePath, True, True, True, False)
@@ -675,7 +675,7 @@ class SceneAsset(GenericAsset):
         <tab name="Options">
             <row name="Import mode" accepts="max">
                 <option type="radio" name="importMode">
-                    <optionitem name="Import" value="True"/>
+                    <optionitem name="Open" value="True"/>
                     <optionitem name="Scene XRef"/>
                 </option>
             </row>
