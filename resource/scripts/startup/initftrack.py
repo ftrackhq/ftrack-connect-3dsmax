@@ -2,17 +2,13 @@
 
 import os
 
-import MaxPlus
+import pymxs
 import sys
 
-# Discover 3dsmax version.
-raw_max_version = MaxPlus.FPValue()
-MaxPlus.Core.EvalMAXScript(
-    'getFileVersion "$max/3dsmax.exe"', raw_max_version
-)
-max_version = int(raw_max_version.Get().split(',')[0])
+max_version = int(pymxs.runtime.maxversion()[-2])
+print(max_version)
 
-if max_version < 19:
+if max_version < 2019:
     # Max 2015 & 2016 require this patch to avoid crashing during print and logging.
     # https://help.autodesk.com/view/3DSMAX/2016/ENU/?guid=__files_GUID_B3FF3632_F177_4A90_AE3D_D36603B7A2F3_htm
     sys.stdout = _old_stdout
@@ -23,6 +19,7 @@ from QtExt import QtCore
 
 from ftrack_connect_3dsmax.connector import Connector
 from ftrack_connect_3dsmax.connector.maxcallbacks import *
+from ftrack_connect_3dsmax.max_helper import MaxHelper
 
 
 try:
@@ -32,20 +29,19 @@ except:
     pass
 
 
+
 class FtrackMenuBuilder(object):
     '''Build the Ftrack menu.'''
     MENU_NAME = 'Ftrack'
 
     def __init__(self):
         '''Initialize the menu builder.'''
-        if MaxPlus.MenuManager.MenuExists(self.MENU_NAME):
-             MaxPlus.MenuManager.UnregisterMenu(self.MENU_NAME)
-
-        self.__menu_builder = MaxPlus.MenuBuilder(self.MENU_NAME)
+        MaxHelper.unregister_menu(self.MENU_NAME)
+        self.__menu_interface = MaxHelper.create_menu(self.MENU_NAME)
 
     def add_separator(self):
         '''Add a separator between menu items.'''
-        self.__menu_builder.AddSeparator()
+        MaxHelper.add_separator(self.__menu_interface)
 
     def add_item(self, action):
         '''Add a menu item.'''
@@ -57,7 +53,8 @@ class FtrackMenuBuilder(object):
 
     def __del__(self):
         '''Unregister the Ftrack menu.'''
-        MaxPlus.MenuManager.UnregisterMenu(self.MENU_NAME)
+        MaxHelper.unregister_menu(self.__menu_interface)
+
 
 class DisableMaxAcceleratorsEventFilter(QtCore.QObject):
     """An event filter that disables the 3ds Max accelerators while a widget is
@@ -91,30 +88,16 @@ infoDialog = None
 tasksDialog = None
 
 
-def __adjustDialogLayoutMargins(dialog):
-    '''Add extra spacing to a dialog main layout in Max 2017 and newer.'''
-    # Get the Max version.
-    vers = MaxPlus.Core.EvalMAXScript('getFileVersion "$max/3dsmax.exe"').Get()
-
-    # Add an extra 5 pixels margin for Max 2017 or newer.
-    if not vers.startswith('18'):
-        dialog.mainLayout.setContentsMargins(5, 5, 5, 5)
-
 def __createAndInitFtrackDialog(Dialog):
     '''Create an instance of a dialog and initialize it for use in 3ds Max'''
     dialog = Dialog(connector=connector)
 
-    try:
-        # AttachQWidgetToMax is only available in Max 2017 and newer.
-        MaxPlus.AttachQWidgetToMax(dialog, isModelessDlg=True)
-    except AttributeError:
-        # If running 2016, the dialog cannot be parented to Max's window.
-        dialog.installEventFilter(
-            DisableMaxAcceleratorsEventFilter(dialog))
+    MaxPlus.AttachQWidgetToMax(dialog, isModelessDlg=True)
 
     # Make the dialog initial size bigger, as in Max by default they appear too small.
     dialog.resize(dialog.width(), 1.7 * dialog.height())
     return dialog
+
 
 def __createDialogAction(actionName, callback):
     '''Create an action and add it to the menu builder if it is valid'''
@@ -133,7 +116,6 @@ def showImportAssetDialog():
     if not importAssetDialog:
         from ftrack_connect.ui.widget.import_asset import FtrackImportAssetDialog
         importAssetDialog = __createAndInitFtrackDialog(FtrackImportAssetDialog)
-        __adjustDialogLayoutMargins(importAssetDialog)
 
     importAssetDialog.show()
 
@@ -145,9 +127,9 @@ def showPublishAssetDialog():
         from ftrack_connect_3dsmax.ui.publisher import PublishAssetDialog
         publishAssetDialog = __createAndInitFtrackDialog(functools.partial(
             PublishAssetDialog, currentEntity=currentEntity))
-        __adjustDialogLayoutMargins(publishAssetDialog)
 
     publishAssetDialog.show()
+
 
 def showAssetManagerDialog():
     '''Create the asset manager dialog if it does not exist and show it'''

@@ -31,7 +31,6 @@ BUILD_PATH = os.path.join(ROOT_PATH, 'build')
 
 STAGING_PATH = os.path.join(BUILD_PATH, PLUGIN_NAME)
 
-EXOCORTEX_PLUGIN_PATH = os.path.join(RESOURCE_PATH, 'ExocortexCrate')
 
 MAX_SCRIPTS_PATH = os.path.join(RESOURCE_PATH, 'scripts')
 
@@ -90,11 +89,6 @@ class BuildPlugin(Command):
             os.path.join(STAGING_PATH, 'resource', 'scripts')
         )
 
-        # Copy plugin files
-        shutil.copytree(
-            EXOCORTEX_PLUGIN_PATH,
-            os.path.join(STAGING_PATH, 'resource', 'ExocortexCrate')
-        )
 
         # Copy hook files
         shutil.copytree(
@@ -144,7 +138,8 @@ setup(
     ],
     install_requires=[
         'appdirs',
-        'qtext @ git+https://bitbucket.org/ftrack/qtext/get/0.2.2.zip#egg=QtExt-0.2.2'
+        'qtext @ git+https://bitbucket.org/ftrack/qtext/get/0.2.2.zip#egg=QtExt-0.2.2',
+        'ftrack-python-api >= 2.0, < 3.0'
     ],
     tests_require=[
         'pytest >= 2.3.5, < 3'

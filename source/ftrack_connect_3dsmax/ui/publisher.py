@@ -212,7 +212,7 @@ class PublishAssetDialog(QtWidgets.QDialog):
                     try:
                         ftTask.setStatus(taskStatus)
                     except Exception, error:
-                        print 'warning: {0}'.format(error)
+                        print('warning: {0}'.format(error))
 
                     break
 
