@@ -175,7 +175,7 @@ class ApplicationStore(ftrack_connect.application.ApplicationStore):
         filtered_versions = []
         # we now support only max 2021 and higher
         for application in applications:
-            if application['version'] <= LooseVersion('2021'):
+            if application['version'] >= LooseVersion('2021'):
                 filtered_versions.append(application)
 
         return filtered_versions
