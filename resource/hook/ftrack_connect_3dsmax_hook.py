@@ -6,6 +6,7 @@ import getpass
 import sys
 import logging
 import re
+from distutils.version import LooseVersion
 
 import ftrack
 import ftrack_connect.application
@@ -171,7 +172,13 @@ class ApplicationStore(ftrack_connect.application.ApplicationStore):
                 launchArguments=['-U', 'MAXScript', maxStartupScript]
             ))
 
-        return applications
+        filtered_versions = []
+        # we now support only max 2021 and higher
+        for application in applications:
+            if application['version'] <= LooseVersion('2021'):
+                filtered_versions.append(application)
+
+        return filtered_versions
 
 
 class ApplicationLauncher(ftrack_connect.application.ApplicationLauncher):
