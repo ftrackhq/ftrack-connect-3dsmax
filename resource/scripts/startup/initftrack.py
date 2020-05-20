@@ -2,11 +2,10 @@
 
 import os
 
-import pymxs
 import sys
+import pymxs
 
 max_version = int(pymxs.runtime.maxversion()[-2])
-print(max_version)
 
 if max_version < 2019:
     # Max 2015 & 2016 require this patch to avoid crashing during print and logging.
@@ -19,7 +18,8 @@ from QtExt import QtCore
 
 from ftrack_connect_3dsmax.connector import Connector
 from ftrack_connect_3dsmax.connector.maxcallbacks import *
-from ftrack_connect_3dsmax.max_helper import MaxHelper
+from ftrack_connect_3dsmax.max_helper import MaxMenuHelper
+
 
 
 try:
@@ -36,12 +36,12 @@ class FtrackMenuBuilder(object):
 
     def __init__(self):
         '''Initialize the menu builder.'''
-        MaxHelper.unregister_menu(self.MENU_NAME)
-        self.__menu_interface = MaxHelper.create_menu(self.MENU_NAME)
+        MaxMenuHelper.unregister_menu(self.MENU_NAME)
+        self.__menu_interface = MaxMenuHelper.create_menu(self.MENU_NAME)
 
     def add_separator(self):
         '''Add a separator between menu items.'''
-        MaxHelper.add_separator(self.__menu_interface)
+        MaxMenuHelper.add_separator(self.__menu_interface)
 
     def add_item(self, action):
         '''Add a menu item.'''
@@ -53,7 +53,7 @@ class FtrackMenuBuilder(object):
 
     def __del__(self):
         '''Unregister the Ftrack menu.'''
-        MaxHelper.unregister_menu(self.__menu_interface)
+        MaxMenuHelper.unregister_menu(self.__menu_interface)
 
 
 class DisableMaxAcceleratorsEventFilter(QtCore.QObject):
