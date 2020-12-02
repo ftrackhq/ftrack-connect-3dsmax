@@ -36,8 +36,6 @@ def on_discover_integration(session, event):
                 'PYTHONPATH.prepend':sources,
                 'FTRACK_TASKID.set': task['id'],
                 'FTRACK_SHOTID.set': task['parent']['id'],
-                'LOGNAME.set': session._api_user,
-                'FTRACK_APIKEY.set': session._api_key,
                 'FS.set': task['parent']['custom_attributes'].get('fstart', '1.0'),
                 'FE.set': task['parent']['custom_attributes'].get('fend', '100.0')
             },
