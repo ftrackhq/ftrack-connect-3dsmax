@@ -32,6 +32,7 @@ def on_discover_integration(session, event):
             "name": 'ftrack-connect-3dsmax',
             'version': integration_version,
             'env': {
+                'PATH':maxStartupDir,
                 'PYTHONPATH.prepend':sources,
                 'FTRACK_TASKID.set': task['id'],
                 'FTRACK_SHOTID.set': task['parent']['id'],
