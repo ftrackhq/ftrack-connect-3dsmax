@@ -213,8 +213,5 @@ def initFtrack():
 
     registerMaxOpenFileCallbacks(showAssetManagerAction)
 
-    # Send usage event.
-    from ftrack_connect_3dsmax.connector import usage
-    usage.send_event('USED-FTRACK-CONNECT-3DS-MAX')
 
 initFtrack()

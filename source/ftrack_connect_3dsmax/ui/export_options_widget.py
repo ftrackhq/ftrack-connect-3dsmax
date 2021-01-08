@@ -6,7 +6,7 @@ import os
 from QtExt import QtCore, QtGui, QtWidgets
 
 import ftrack
-from ftrack_connect.ui.widget.stacked_options import StackedOptionsWidget
+from ftrack_connector_legacy.ui.widget.stacked_options import StackedOptionsWidget
 from ftrack_connect_3dsmax import connector as ftrack_connector
 
 

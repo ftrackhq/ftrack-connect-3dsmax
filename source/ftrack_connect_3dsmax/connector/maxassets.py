@@ -6,13 +6,13 @@ import copy
 import uuid
 import ftrack
 
-from ftrack_connect.connector import (
+from ftrack_connector_legacy.connector import (
     FTAssetHandlerInstance,
     FTAssetType,
     FTComponent
 )
 
-from ftrack_connect.connector import panelcom
+from ftrack_connector_legacy.connector import panelcom
 
 import maxcon
 

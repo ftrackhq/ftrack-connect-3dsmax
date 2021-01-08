@@ -3,8 +3,8 @@ import ftrack
 
 import MaxPlus
 
-import ftrack_connect.util
-import ftrack_connect.asset_version_scanner
+import ftrack_connector_legacy.util
+import ftrack_connector_legacy.asset_version_scanner
 
 showAssetManagerAction = None
 checkForNewAssetsAndRefreshCallbackId = None
@@ -52,10 +52,10 @@ def scanForNewAssets():
             auto_connect_event_hub=False,
             plugin_paths=None
         )
-        scanner = ftrack_connect.asset_version_scanner.Scanner(
+        scanner = ftrack_connector_legacy.asset_version_scanner.Scanner(
             session=session,
             result_handler=(
-                lambda result: ftrack_connect.util.invoke_in_main_thread(
+                lambda result: ftrack_connector_legacy.util.invoke_in_main_thread(
                     handleScanResult,
                     result,
                     scannedFtrackHelpers
@@ -69,7 +69,7 @@ def checkForNewAssetsAndRefreshAssetManager(code=None):
     refresh the asset manager dialog'''
     scanForNewAssets()
 
-    from ftrack_connect.connector import panelcom
+    from ftrack_connector_legacy.connector import panelcom
     panelComInstance = panelcom.PanelComInstance.instance()
     panelComInstance.refreshListeners()
 
