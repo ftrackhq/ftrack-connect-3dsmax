@@ -63,5 +63,11 @@ def register(session):
         'topic=ftrack.connect.application.launch'
         ' and data.application.identifier=3ds-max*',
         handle_event
+    )
+
+    session.event_hub.subscribe(
+        'topic=ftrack.connect.application.discover'
+        ' and data.application.identifier=3ds-max*',
+        handle_event
 
     )
