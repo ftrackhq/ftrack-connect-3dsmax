@@ -61,13 +61,15 @@ def register(session):
 
     session.event_hub.subscribe(
         'topic=ftrack.connect.application.launch'
-        ' and data.application.identifier=3ds-max*',
+        ' and data.application.identifier=3ds-max*'
+        ' and data.application.version <= 2020',
         handle_event
     )
 
     session.event_hub.subscribe(
         'topic=ftrack.connect.application.discover'
-        ' and data.application.identifier=3ds-max*',
+        ' and data.application.identifier=3ds-max*'
+        ' and data.application.version <= 2020',
         handle_event
 
     )
