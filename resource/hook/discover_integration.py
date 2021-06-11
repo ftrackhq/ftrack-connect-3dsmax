@@ -49,7 +49,7 @@ def on_launch_max_integration(session, event):
         task = session.get('Context', selection[0]['entityId'])
         max_base_data['integration']['env']['FTRACK_TASKID.set'] =  task['id']
         max_base_data['integration']['env']['FTRACK_SHOTID.set'] =  task['parent']['id']
-        max_base_data['integration']['env']['FS.set'] = task['parent']['custom_attributes'].get('fstart', '1.0'),
+        max_base_data['integration']['env']['FS.set'] = task['parent']['custom_attributes'].get('fstart', '1.0')
         max_base_data['integration']['env']['FE.set'] = task['parent']['custom_attributes'].get('fend', '100.0')
 
     return max_base_data
