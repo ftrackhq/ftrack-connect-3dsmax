@@ -7,11 +7,11 @@
 Release Notes
 *************
 
-
-.. release:: 0.5.0-beta-1
-    :date: 2021-03-11
+.. release:: 0.5.0
+    :date: 2021-09-08
 
     .. change:: change
+        :tags: Api
 
         Update pyside signal signature for pyside2 compatiblity.
 
@@ -19,6 +19,22 @@ Release Notes
         :tags: Internal
 
         Rename scene asset option from import to open to match behaviour.
+
+    .. change:: change
+        :tags: Hook
+
+        Update hook for application-launcher.
+
+    .. change:: change
+        :tags: Setup
+
+        Provide dependency to ftrack-connector-legacy module.
+
+.. warning::
+
+    From this version the support for ftrack-connect 1.X is dropped, and
+    only ftrack-conenct 2.0 will be supported up to the integration EOL.
+
 
 .. release:: 0.4.3
     :date: 2020-01-21
