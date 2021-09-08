@@ -9,7 +9,7 @@ Documentation
 *************
 
 Full documentation, including installation and setup guides, can be found at
-http://ftrack-connect-3dsmax.rtd.ftrack.com/en/stable/
+https://ftrack-connect-3dsmax.readthedocs.io/en/latest/
 
 *********************
 Copyright and license
