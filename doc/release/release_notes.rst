@@ -10,7 +10,7 @@ Release Notes
 .. release:: 0.5.0
     :date: 2021-09-08
 
-    .. change:: change
+    .. change:: changed
         :tags: Api
 
         Update pyside signal signature for pyside2 compatiblity.
@@ -20,12 +20,12 @@ Release Notes
 
         Rename scene asset option from import to open to match behaviour.
 
-    .. change:: change
+    .. change:: changed
         :tags: Hook
 
         Update hook for application-launcher.
 
-    .. change:: change
+    .. change:: changed
         :tags: Setup
 
         Provide dependency to ftrack-connector-legacy module.
