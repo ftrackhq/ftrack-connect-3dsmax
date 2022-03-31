@@ -2,6 +2,11 @@
 ftrack connect 3dsmax
 ###############################
 
+.. warning::
+
+    This integration supports only python 2 and will reach EOL by the end of 2022 and will no be longer supported. 
+    
+
 3DS Max integration with ftrack.
 
 *************
