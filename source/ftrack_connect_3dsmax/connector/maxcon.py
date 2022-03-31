@@ -8,8 +8,8 @@ import MaxPlus
 
 import ftrack_api
 
-from ftrack_connect.connector import base as maincon
-from ftrack_connect.connector import FTAssetHandlerInstance
+from ftrack_connector_legacy.connector import base as maincon
+from ftrack_connector_legacy.connector import FTAssetHandlerInstance
 
 from .assethelper import *
 from .assetimportmodes import *

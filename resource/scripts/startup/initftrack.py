@@ -131,7 +131,7 @@ def showImportAssetDialog():
     global importAssetDialog
 
     if not importAssetDialog:
-        from ftrack_connect.ui.widget.import_asset import FtrackImportAssetDialog
+        from ftrack_connector_legacy.ui.widget.import_asset import FtrackImportAssetDialog
         importAssetDialog = __createAndInitFtrackDialog(FtrackImportAssetDialog)
         __adjustDialogLayoutMargins(importAssetDialog)
 
@@ -154,7 +154,7 @@ def showAssetManagerDialog():
     global assetManagerDialog
 
     if not assetManagerDialog:
-        from ftrack_connect.ui.widget.asset_manager import FtrackAssetManagerDialog
+        from ftrack_connector_legacy.ui.widget.asset_manager import FtrackAssetManagerDialog
         assetManagerDialog = __createAndInitFtrackDialog(FtrackAssetManagerDialog)
 
         # Make some columns of the asset manager dialog wider to compensate
@@ -213,8 +213,5 @@ def initFtrack():
 
     registerMaxOpenFileCallbacks(showAssetManagerAction)
 
-    # Send usage event.
-    from ftrack_connect_3dsmax.connector import usage
-    usage.send_event('USED-FTRACK-CONNECT-3DS-MAX')
 
 initFtrack()
